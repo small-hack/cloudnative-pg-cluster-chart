@@ -4,6 +4,8 @@
 
 Create postgres tenant clusters managed by the CNPG Operator
 
+https://cloudymax.github.io/cloudnative-pg-tenant-chart/
+
 ## Maintainers
 
 | Name | Email | Url |
