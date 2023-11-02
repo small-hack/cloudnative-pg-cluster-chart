@@ -18,12 +18,16 @@ spec:
     retentionPolicy: {{ .Values.backup.retentionPolicy }}
   monitoring:
     enablePodMonitor: {{ .Values.monitoring.enablePodMonitor }}
+  {{- with .Values.postgresql }}
   postgresql:
-    pg_hba:
-      - hostnossl all all 0.0.0.0/0 reject
-      - hostssl all all 0.0.0.0/0 cert clientcert=verify-full
+    {{- toYaml . | nindent 4}}
+  {{- end }}
   storage:
     size: {{ .Values.storage.size }}
+  {{- with .Values.bootstrap }}
+  bootstrap:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup

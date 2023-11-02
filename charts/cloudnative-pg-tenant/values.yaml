@@ -2,6 +2,18 @@ name: "example"
 
 instances: 3
 
+superuserSecret:
+  name: superuser-secret
+
+bootstrap:
+  initdb:
+    database: app
+    owner: app
+    secret:
+      name: app-secret
+    postInitSQL:
+      - CREATE ROLE friend
+
 backup:
   destinationPath: "backups"
   retentionPolicy: "30d"
