@@ -1,0 +1,36 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cluster-example
+spec:
+  instances: {{ .Values.instances}}
+  backup:
+    barmanObjectStore:
+      destinationPath: {{ .Values.destinationPath }}
+      s3Credentials:
+        accessKeyId:
+          name: {{ .Values.backup.s3Credentials.accessKeyId.name }}
+          key: {{ .Values.backup.s3Credentials.accessKeyId.key }}
+        secretAccessKey:
+          name: {{ .Values.backup.s3Credentials.secretAccessKey.name }}
+          key: {{ .Values.backup.s3Credentials.secretAccessKey.key }}
+    retentionPolicy: {{ .Values.backup.retentionPolicy }}
+  monitoring:
+    enablePodMonitor: {{ .Values.monitoring.enablePodMonitor }}
+  postgresql:
+    pg_hba:
+      - hostnossl all all 0.0.0.0/0 reject
+      - hostssl all all 0.0.0.0/0 cert clientcert=verify-full
+  storage:
+    size: {{ .Values.storage.size }}
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: {{ .Values.scheduledBackup.name }}
+spec:
+  schedule: {{ .Values.scheduledBackup.spec.schedule }}
+  backupOwnerReference: {{ .Values.scheduledBackup.spec.backupOwnerReference }} 
+  cluster:
+    name: {{ .Values.scheduledBackup.spec.cluster.name }}

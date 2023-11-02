@@ -1,0 +1,35 @@
+name: "example"
+
+instances: 3
+
+backup:
+  destinationPath: "backups"
+  retentionPolicy: "30d"
+  s3Credentials:
+    accessKeyId:
+      name: "aws-creds"
+      key : "ACCESS_KEY_ID"
+    secretAccessKey:
+      name: "aws-creds"
+      key : "ACCESS_SECRET_KEY"
+
+scheduledBackup:
+  name: example-backup
+  spec:
+    schedule: "0 0 0 * * *" 
+    backupOwnerReference: self
+    cluster:
+      name: pg-backup
+
+monitoring:
+  enablePodMonitor: true
+
+postgresql:
+  pg_hba: 
+    - hostnossl all all 0.0.0.0/0 reject
+    - hostssl all all 0.0.0.0/0 cert clientcert=verify-full
+
+storage: 
+  size: 1Gi
+
+
