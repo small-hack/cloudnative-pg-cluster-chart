@@ -7,15 +7,19 @@ superuserSecret:
 
 bootstrap:
   initdb:
+    # -- initial database to create
     database: app
+    # -- owner of the initial database that is created above
     owner: app
     secret:
       name: app-secret
+    # -- list of SQL commands to run as part of the init scripts
     postInitSQL:
       - CREATE ROLE friend
 
 backup:
   destinationPath: "backups"
+  # -- how long to keep backups for
   retentionPolicy: "30d"
   s3Credentials:
     accessKeyId:
@@ -38,9 +42,9 @@ monitoring:
   enablePodMonitor: true
 
 postgresql:
-  pg_hba: 
+  pg_hba:
     - hostnossl all all 0.0.0.0/0 reject
     - hostssl all all 0.0.0.0/0 cert clientcert=verify-full
 
-storage: 
+storage:
   size: 1Gi
