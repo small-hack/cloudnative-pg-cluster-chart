@@ -1,4 +1,4 @@
-name: "example"
+name: "cnpg"
 
 instances: 3
 
@@ -25,6 +25,7 @@ backup:
       name: "aws-creds"
       key : "ACCESS_SECRET_KEY"
 
+
 scheduledBackup:
   name: example-backup
   spec:
@@ -43,5 +44,3 @@ postgresql:
 
 storage: 
   size: 1Gi
-
-

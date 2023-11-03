@@ -2,25 +2,21 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: cluster-example
+  name: {{ .Values.name }}
 spec:
   instances: {{ .Values.instances}}
+  certificates:
+    clientCASecret: "{{ .Values.name}}-client-cert"
+    replicationTLSSecret: "{{ .Values.name }}-client-cert"
+  {{- with .Values.backup }}
   backup:
-    barmanObjectStore:
-      destinationPath: {{ .Values.destinationPath }}
-      s3Credentials:
-        accessKeyId:
-          name: {{ .Values.backup.s3Credentials.accessKeyId.name }}
-          key: {{ .Values.backup.s3Credentials.accessKeyId.key }}
-        secretAccessKey:
-          name: {{ .Values.backup.s3Credentials.secretAccessKey.name }}
-          key: {{ .Values.backup.s3Credentials.secretAccessKey.key }}
-    retentionPolicy: {{ .Values.backup.retentionPolicy }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   monitoring:
     enablePodMonitor: {{ .Values.monitoring.enablePodMonitor }}
   {{- with .Values.postgresql }}
   postgresql:
-    {{- toYaml . | nindent 4}}
+    {{- toYaml . | nindent 4 }}
   {{- end }}
   storage:
     size: {{ .Values.storage.size }}
@@ -28,13 +24,3 @@ spec:
   bootstrap:
     {{- toYaml . | nindent 4 }}
   {{- end }}
----
-apiVersion: postgresql.cnpg.io/v1
-kind: ScheduledBackup
-metadata:
-  name: {{ .Values.scheduledBackup.name }}
-spec:
-  schedule: {{ .Values.scheduledBackup.spec.schedule }}
-  backupOwnerReference: {{ .Values.scheduledBackup.spec.backupOwnerReference }} 
-  cluster:
-    name: {{ .Values.scheduledBackup.spec.cluster.name }}

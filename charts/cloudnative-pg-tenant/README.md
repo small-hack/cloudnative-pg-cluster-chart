@@ -1,6 +1,6 @@
 # cnpg-tenant
 
-![Version: 0.0.2](https://img.shields.io/badge/Version-0.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 Create postgres tenant clusters managed by the CNPG Operator
 
@@ -26,7 +26,7 @@ Create postgres tenant clusters managed by the CNPG Operator
 | bootstrap.initdb.secret.name | string | `"app-secret"` |  |
 | instances | int | `3` |  |
 | monitoring.enablePodMonitor | bool | `true` |  |
-| name | string | `"example"` |  |
+| name | string | `"cnpg"` |  |
 | postgresql.pg_hba[0] | string | `"hostnossl all all 0.0.0.0/0 reject"` |  |
 | postgresql.pg_hba[1] | string | `"hostssl all all 0.0.0.0/0 cert clientcert=verify-full"` |  |
 | scheduledBackup.name | string | `"example-backup"` |  |
