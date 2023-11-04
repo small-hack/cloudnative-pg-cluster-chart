@@ -25,15 +25,15 @@ backup:
     s3Credentials:
       accessKeyId:
         name: "aws-creds"
-        key : "ACCESS_KEY_ID"
+        key: "ACCESS_KEY_ID"
       secretAccessKey:
         name: "aws-creds"
-        key : "ACCESS_SECRET_KEY"
+        key: "ACCESS_SECRET_KEY"
 
 scheduledBackup:
   name: example-backup
   spec:
-    schedule: "0 0 0 * * *" 
+    schedule: "0 0 0 * * *"
     backupOwnerReference: self
     cluster:
       name: pg-backup
@@ -43,7 +43,7 @@ certificates:
   serverCASecret: my-postgres-server-cert
   clientCASecret: my-postgres-client-cert
   replicationTLSSecret: my-postgres-client-cert
-    
+
 monitoring:
   enablePodMonitor: true
 

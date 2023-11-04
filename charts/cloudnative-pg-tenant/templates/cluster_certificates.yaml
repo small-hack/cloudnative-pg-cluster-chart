@@ -6,6 +6,30 @@ metadata:
 spec:
   selfSigned: {}
 ---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: "{{ .Values.name }}-server-ca"
+spec:
+  isCA: true
+  commonName: "{{ .Values.name }}-server-ca"
+  secretName: "{{ .Values.name }}-server-ca-key-pair"
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  issuerRef:
+    name: selfsigned-issuer
+    kind: Issuer
+    group: cert-manager.io
+---
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: "{{ .Values.name }}-server-ca-issuer"
+spec:
+  ca:
+    secretName: "{{ .Values.name }}-server-ca-key-pair"
+---
 apiVersion: v1
 kind: Secret
 metadata:
@@ -33,7 +57,7 @@ spec:
     - "{{ .Values.name }}-ro.default"
     - "{{ .Values.name }}-ro.default.svc"
   issuerRef:
-    name: "{{ .Values.name }}-selfsigned-issuer"
+    name: "{{ .Values.name }}-ca-issuer"
     kind: Issuer
     group: cert-manager.io
 
