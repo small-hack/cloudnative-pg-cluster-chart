@@ -30,7 +30,6 @@ backup:
         name: "aws-creds"
         key : "ACCESS_SECRET_KEY"
 
-
 scheduledBackup:
   name: example-backup
   spec:
@@ -39,6 +38,12 @@ scheduledBackup:
     cluster:
       name: pg-backup
 
+certificates:
+  serverTLSSecret: my-postgres-server-cert
+  serverCASecret: my-postgres-server-cert
+  clientCASecret: my-postgres-client-cert
+  replicationTLSSecret: my-postgres-client-cert
+    
 monitoring:
   enablePodMonitor: true
 

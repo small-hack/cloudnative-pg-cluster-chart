@@ -1,6 +1,6 @@
 # cnpg-tenant
 
-![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.0.5](https://img.shields.io/badge/Version-0.0.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 Create postgres tenant clusters managed by the CNPG Operator
 
@@ -21,6 +21,10 @@ Create postgres tenant clusters managed by the CNPG Operator
 | bootstrap.initdb.owner | string | `"app"` | owner of the initial database that is created above |
 | bootstrap.initdb.postInitSQL | list | `["CREATE ROLE friend"]` | list of SQL commands to run as part of the init scripts |
 | bootstrap.initdb.secret.name | string | `"app-secret"` |  |
+| certificates.clientCASecret | string | `"my-postgres-client-cert"` |  |
+| certificates.replicationTLSSecret | string | `"my-postgres-client-cert"` |  |
+| certificates.serverCASecret | string | `"my-postgres-server-cert"` |  |
+| certificates.serverTLSSecret | string | `"my-postgres-server-cert"` |  |
 | instances | int | `3` |  |
 | monitoring.enablePodMonitor | bool | `true` |  |
 | name | string | `"cnpg"` |  |
