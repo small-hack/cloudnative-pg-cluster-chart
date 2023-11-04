@@ -18,16 +18,17 @@ bootstrap:
       - CREATE ROLE friend
 
 backup:
-  destinationPath: "backups"
-  # -- how long to keep backups for
   retentionPolicy: "30d"
-  s3Credentials:
-    accessKeyId:
-      name: "aws-creds"
-      key : "ACCESS_KEY_ID"
-    secretAccessKey:
-      name: "aws-creds"
-      key : "ACCESS_SECRET_KEY"
+  barmanObjectStore:
+    destinationPath: "backups"
+    # -- how long to keep backups for
+    s3Credentials:
+      accessKeyId:
+        name: "aws-creds"
+        key : "ACCESS_KEY_ID"
+      secretAccessKey:
+        name: "aws-creds"
+        key : "ACCESS_SECRET_KEY"
 
 
 scheduledBackup:
