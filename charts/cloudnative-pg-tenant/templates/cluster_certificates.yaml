@@ -18,7 +18,7 @@ spec:
     algorithm: ECDSA
     size: 256
   issuerRef:
-    name: selfsigned-issuer
+    name: "{{ .Values.name }}-selfsigned-issuer"
     kind: Issuer
     group: cert-manager.io
 ---
