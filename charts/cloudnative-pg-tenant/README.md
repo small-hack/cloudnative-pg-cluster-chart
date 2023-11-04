@@ -1,6 +1,6 @@
 # cnpg-tenant
 
-![Version: 0.0.3](https://img.shields.io/badge/Version-0.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.0.4](https://img.shields.io/badge/Version-0.0.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 Create postgres tenant clusters managed by the CNPG Operator
 
@@ -14,15 +14,12 @@ Create postgres tenant clusters managed by the CNPG Operator
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| backup.destinationPath | string | `"backups"` |  |
+| backup.barmanObjectStore.destinationPath | string | `"backups"` |  |
+| backup.barmanObjectStore.s3Credentials | object | `{"accessKeyId":{"key":"ACCESS_KEY_ID","name":"aws-creds"},"secretAccessKey":{"key":"ACCESS_SECRET_KEY","name":"aws-creds"}}` | how long to keep backups for |
 | backup.retentionPolicy | string | `"30d"` |  |
-| backup.s3Credentials.accessKeyId.key | string | `"ACCESS_KEY_ID"` |  |
-| backup.s3Credentials.accessKeyId.name | string | `"aws-creds"` |  |
-| backup.s3Credentials.secretAccessKey.key | string | `"ACCESS_SECRET_KEY"` |  |
-| backup.s3Credentials.secretAccessKey.name | string | `"aws-creds"` |  |
-| bootstrap.initdb.database | string | `"app"` |  |
-| bootstrap.initdb.owner | string | `"app"` |  |
-| bootstrap.initdb.postInitSQL[0] | string | `"CREATE ROLE friend"` |  |
+| bootstrap.initdb.database | string | `"app"` | initial database to create |
+| bootstrap.initdb.owner | string | `"app"` | owner of the initial database that is created above |
+| bootstrap.initdb.postInitSQL | list | `["CREATE ROLE friend"]` | list of SQL commands to run as part of the init scripts |
 | bootstrap.initdb.secret.name | string | `"app-secret"` |  |
 | instances | int | `3` |  |
 | monitoring.enablePodMonitor | bool | `true` |  |
