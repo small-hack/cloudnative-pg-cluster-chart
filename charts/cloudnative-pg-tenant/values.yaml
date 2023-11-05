@@ -14,8 +14,9 @@ bootstrap:
     secret:
       name: app-secret
     # -- list of SQL commands to run as part of the init scripts
-    postInitSQL:
-      - CREATE ROLE friend
+    postInitSQL: []
+    # example init command:
+    #  - CREATE ROLE friend
 
 backup:
   # -- how long to keep backups for
