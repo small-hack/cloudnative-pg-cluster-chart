@@ -1,6 +1,6 @@
 # CloudNativePG Tenant Chart
 
-https://small-hack.github.io/cloudnative-pg-tenant-chart/
+This [chart](https://small-hack.github.io/cloudnative-pg-tenant-chart/) is the tenant component to the operator component [here](https://github.com/cloudnative-pg/charts).
 
 ## TLDR
 
