@@ -1,6 +1,6 @@
 # cnpg-tenant
 
-![Version: 0.0.8](https://img.shields.io/badge/Version-0.0.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.0.9](https://img.shields.io/badge/Version-0.0.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 Create postgres tenant clusters managed by the CNPG Operator
 
@@ -15,26 +15,28 @@ Create postgres tenant clusters managed by the CNPG Operator
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | backup.barmanObjectStore.destinationPath | string | `"backups"` |  |
-| backup.barmanObjectStore.s3Credentials | object | `{"accessKeyId":{"key":"ACCESS_KEY_ID","name":"aws-creds"},"secretAccessKey":{"key":"ACCESS_SECRET_KEY","name":"aws-creds"}}` | how long to keep backups for |
-| backup.retentionPolicy | string | `"30d"` |  |
+| backup.barmanObjectStore.s3Credentials.accessKeyId.key | string | `"ACCESS_KEY_ID"` | key in Kubernetes Secret to use for S3 access key ID |
+| backup.barmanObjectStore.s3Credentials.accessKeyId.name | string | `"aws-creds"` | existing Kubernetes Secret to use for S3 access key ID |
+| backup.barmanObjectStore.s3Credentials.secretAccessKey.key | string | `"ACCESS_SECRET_KEY"` | key in Kubernetes Secret to use for S3 secret key |
+| backup.barmanObjectStore.s3Credentials.secretAccessKey.name | string | `"aws-creds"` | existing Kubernetes Secret to use for S3 secret key |
+| backup.retentionPolicy | string | `"30d"` | how long to keep backups for |
 | bootstrap.initdb.database | string | `"app"` | initial database to create |
 | bootstrap.initdb.owner | string | `"app"` | owner of the initial database that is created above |
 | bootstrap.initdb.postInitSQL | list | `["CREATE ROLE friend"]` | list of SQL commands to run as part of the init scripts |
 | bootstrap.initdb.secret.name | string | `"app-secret"` |  |
-| certificates.clientCASecret | string | `"my-postgres-client-cert"` |  |
-| certificates.replicationTLSSecret | string | `"my-postgres-client-cert"` |  |
-| certificates.serverCASecret | string | `"my-postgres-server-cert"` |  |
-| certificates.serverTLSSecret | string | `"my-postgres-server-cert"` |  |
+| certificates.clientCASecret | string | `"my-postgres-client-cert"` | name of existing Kubernetes Secret for the postgresql client Certificate Authority cert |
+| certificates.replicationTLSSecret | string | `"my-postgres-client-cert"` | name of existing Kubernetes Secret for the postgresql client TLS cert |
+| certificates.serverCASecret | string | `"my-postgres-server-cert"` | name of existing Kubernetes Secret for the postgresql server Certificate Authority cert |
+| certificates.serverTLSSecret | string | `"my-postgres-server-cert"` | name of existing Kubernetes Secret for the postgresql server TLS cert |
 | instances | int | `3` |  |
-| monitoring.enablePodMonitor | bool | `true` |  |
+| monitoring.enablePodMonitor | bool | `true` | enable monitoring via Prometheus |
 | name | string | `"cnpg"` |  |
-| postgresql.pg_hba[0] | string | `"hostnossl all all 0.0.0.0/0 reject"` |  |
-| postgresql.pg_hba[1] | string | `"hostssl all all 0.0.0.0/0 cert clientcert=verify-full"` |  |
-| scheduledBackup.name | string | `"example-backup"` |  |
+| postgresql.pg_hba | list | `["hostnossl all all 0.0.0.0/0 reject","hostssl all all 0.0.0.0/0 cert clientcert=verify-full"]` | records for the pg_hba.conf file. ref: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html |
+| scheduledBackup.name | string | `"example-backup"` | name to use for your scheduled backup job |
 | scheduledBackup.spec.backupOwnerReference | string | `"self"` |  |
 | scheduledBackup.spec.cluster.name | string | `"pg-backup"` |  |
-| scheduledBackup.spec.schedule | string | `"0 0 0 * * *"` |  |
-| storage.size | string | `"1Gi"` |  |
+| scheduledBackup.spec.schedule | string | `"0 0 0 * * *"` | crontab style schedule to run the backups |
+| storage.size | string | `"1Gi"` | how much storage to allocate to the postgresql cluster |
 | superuserSecret.name | string | `"superuser-secret"` |  |
 
 ----------------------------------------------
