@@ -48,8 +48,8 @@ jobs:
 
       - name: helm install cnpg and cert-manager dependencies
         run: |
-          helm install --namespace cnpg-system --create-namespace cnpg/cloudnative-pg cnpg
-          helm install --namespace cert-manager --create-namespace jetstack/cert-manager cert-manager
+          helm install cnpg --namespace cnpg-system --create-namespace cnpg/cloudnative-pghelm
+          helm install cert-manager --namespace cert-manager --create-namespace jetstack/cert-manager
 
       - name: Run chart-testing (install)
         id: install
