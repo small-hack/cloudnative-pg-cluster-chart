@@ -45,7 +45,7 @@ scheduledBackup:
       name: pg-backup
 
 certificates:
-  # -- generate server and client certs using cert-manager. if true the following 
+  # -- generate server and client certs using cert-manager. if true the following
   # are ignored: certificates.serverTLSSecret, certificates.serverCASecret,
   # certificates.clientCASecret, and certificates.replicationTLSSecret
   generate: true
