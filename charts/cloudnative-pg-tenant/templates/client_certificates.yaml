@@ -1,3 +1,4 @@
+{{- if .Values.certificates.generate }}
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -43,3 +44,4 @@ spec:
     name: "{{ .Values.name }}-client-ca-issuer"
     kind: Issuer
     group: cert-manager.io
+{{- end }}

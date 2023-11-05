@@ -13,9 +13,9 @@ bootstrap:
     owner: app
     secret:
       name: app-secret
-    # -- list of SQL commands to run as part of the init scripts
-    postInitSQL:
-      - CREATE ROLE friend
+    # list of SQL commands to run as part of the init scripts, example:
+    # postInitSQL:
+    #  - CREATE ROLE friend
 
 backup:
   # -- how long to keep backups for
@@ -45,18 +45,26 @@ scheduledBackup:
       name: pg-backup
 
 certificates:
-  # -- name of existing Kubernetes Secret for the postgresql server TLS cert
+  # -- generate server and client certs using cert-manager. if true the following
+  # are ignored: certificates.serverTLSSecret, certificates.serverCASecret,
+  # certificates.clientCASecret, and certificates.replicationTLSSecret
+  generate: true
+  # -- name of existing Kubernetes Secret for the postgresql server TLS cert,
+  # ignored if certificates.generate is true
   serverTLSSecret: my-postgres-server-cert
-  # -- name of existing Kubernetes Secret for the postgresql server Certificate Authority cert
+  # -- name of existing Kubernetes Secret for the postgresql server Certificate
+  # Authority cert, ignored if certificates.generate is true
   serverCASecret: my-postgres-server-cert
-  # -- name of existing Kubernetes Secret for the postgresql client Certificate Authority cert
+  # -- name of existing Kubernetes Secret for the postgresql client Certificate
+  # Authority cert, ignored if certificates.generate is true
   clientCASecret: my-postgres-client-cert
   # -- name of existing Kubernetes Secret for the postgresql client TLS cert
+  # ignored if certificates.generate is true
   replicationTLSSecret: my-postgres-client-cert
 
 monitoring:
   # -- enable monitoring via Prometheus
-  enablePodMonitor: true
+  enablePodMonitor: false
 
 postgresql:
   # -- records for the pg_hba.conf file. ref: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html

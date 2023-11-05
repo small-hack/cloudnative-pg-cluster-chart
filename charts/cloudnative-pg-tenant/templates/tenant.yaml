@@ -5,9 +5,6 @@ metadata:
   name: {{ .Values.name }}
 spec:
   instances: {{ .Values.instances}}
-  certificates:
-    clientCASecret: "{{ .Values.name}}-client-cert"
-    replicationTLSSecret: "{{ .Values.name }}-client-cert"
   {{- with .Values.backup }}
   backup:
     {{- toYaml . | nindent 4 }}
@@ -24,7 +21,15 @@ spec:
   bootstrap:
     {{- toYaml . | nindent 4 }}
   {{- end }}
+  {{- if .Values.certificates.generate }}
+  certificates:
+    serverTLSSecret: "{{ .Values.name }}-server-cert"
+    serverCASecret: "{{ .Values.name }}-server-ca-key-pair"
+    clientCASecret: "{{ .Values.name }}-client-ca-key-pair"
+    replicationTLSSecret: "{{ .Values.name }}-client-cert"
+  {{ else }}
   {{- with .Values.certificates }}
   certificates:
     {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- end }}
