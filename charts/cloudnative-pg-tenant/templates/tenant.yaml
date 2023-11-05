@@ -24,8 +24,8 @@ spec:
   {{- if .Values.certificates.generate }}
   certificates:
     serverTLSSecret: "{{ .Values.name }}-server-cert"
-    serverCASecret: "{{ .Values.name }}-server-ca"
-    clientCASecret: "{{ .Values.name }}-client-ca"
+    serverCASecret: "{{ .Values.name }}-server-ca-key-pair"
+    clientCASecret: "{{ .Values.name }}-client-ca-key-pair"
     replicationTLSSecret: "{{ .Values.name }}-client-cert"
   {{ else }}
   {{- with .Values.certificates }}
