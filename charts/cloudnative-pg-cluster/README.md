@@ -1,6 +1,6 @@
 # cnpg-cluster
 
-![Version: 0.3.0](https://img.shields.io/badge/Version-0.3.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.3.1](https://img.shields.io/badge/Version-0.3.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 Create postgres tenant clusters managed by the CNPG Operator
 
@@ -25,8 +25,8 @@ Create postgres tenant clusters managed by the CNPG Operator
 | bootstrap.initdb.owner | string | `"app"` | owner of the initial database that is created above |
 | bootstrap.initdb.secret.name | string | `"app-secret"` |  |
 | certificates.client.clientCASecret | string | `""` | name of existing Kubernetes Secret for the postgresql client Certificate Authority cert, ignored if certificates.generate is true |
-| certificates.client.enabled | bool | `true` | enable using client certificates |
-| certificates.client.generate | bool | `true` | generate client certs using cert-manager. if true the following are ignored: certificates.clientCASecret, certificates.replicationTLSSecret |
+| certificates.client.enabled | bool | `false` | enable using client certificates |
+| certificates.client.generate | bool | `false` | generate client certs using cert-manager. if true the following are ignored: certificates.clientCASecret, certificates.replicationTLSSecret |
 | certificates.client.replicationTLSSecret | string | `""` | name of existing Kubernetes Secret for the postgresql replication TLS cert ignored if certificates.generate is true |
 | certificates.server.enabled | bool | `false` | enable using server certificates |
 | certificates.server.generate | bool | `false` | generate server certs using cert-manager. if true the following are ignored: certificates.serverTLSSecret, certificates.serverCASecret |
