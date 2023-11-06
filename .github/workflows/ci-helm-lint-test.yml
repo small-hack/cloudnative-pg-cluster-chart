@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'charts/**'
+  workflow_dispatch:
 
 permissions:
   contents: read
