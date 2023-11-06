@@ -69,6 +69,13 @@ certificates:
     # -- name of existing Kubernetes Secret for the postgresql replication TLS
     # cert ignored if certificates.generate is true
     replicationTLSSecret: ""
+  user:
+    # -- create a certificate for a user to connect to postgres using CertManager
+    # requires server and client certificate generation enabled
+    enabled: false
+    # -- name of the user to create a cert for, eg: the DbOwner specified earlier.
+    # This data populated into the commonName field of the certificate.
+    username: "app"
 
 monitoring:
   # -- enable monitoring via Prometheus
