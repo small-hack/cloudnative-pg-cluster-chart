@@ -101,10 +101,10 @@ jobs:
             
       - name: Install CNPG cluster
         run: |
+          kubectl config set-context kind-chart-testing
           helm repo add cnpg-cluster https://small-hack.github.io/cloudnative-pg-tenant-chart
           helm repo update
-          helm install cnpg-cluster cnpg-cluster/cnpg-cluster \
-            --values values.yaml
+          helm install cnpg-cluster cnpg-cluster/cnpg-cluster --values values.yaml
           
       - name: Run chart-testing (install)
         id: install
