@@ -44,18 +44,18 @@ jobs:
 
       - name: Add dependency helm chart repos and install
         run: |
-          helm repo add cnpg https://cloudnative-pg.github.io/charts
+          helm repo add cnpg-operator https://cloudnative-pg.github.io/charts
           helm repo add jetstack https://charts.jetstack.io
-          helm repo add cnpg https://small-hack.github.io/cloudnative-pg-tenant-chart
+          helm repo add cnpg-cluster https://small-hack.github.io/cloudnative-pg-tenant-chart
           helm repo update
           helm install cert-manager jetstack/cert-manager \
             --namespace cert-manager \
             --create-namespace \
             --set installCRDs=true \
             --set prometheus.enabled=false
-          helm install cnpg --namespace cnpg-system \
+          helm install cnpg-operator --namespace cnpg-system \
             --create-namespace cnpg/cloudnative-pg
-          helm install cnpg cnpg/cnpg-cluster \
+          helm install cnpg-cluster cnpg/cnpg-cluster \
             --set instances=1 \
             --set bootstrap.secret.name=null \
             --set bootstrap.secret.backup=null \
