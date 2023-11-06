@@ -1,6 +1,6 @@
-# cnpg-tenant
+# cnpg-cluster
 
-![Version: 0.1.0](https://img.shields.io/badge/Version-0.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.2.0](https://img.shields.io/badge/Version-0.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 Create postgres tenant clusters managed by the CNPG Operator
 
@@ -8,7 +8,8 @@ Create postgres tenant clusters managed by the CNPG Operator
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| cloudymax |  | <https://github.com/cloudymax/> |
+| cloudymax |  | <https://github.com/cloudymax> |
+| jessebot |  | <https://github.com/jessebot> |
 
 ## Values
 
@@ -23,11 +24,14 @@ Create postgres tenant clusters managed by the CNPG Operator
 | bootstrap.initdb.database | string | `"app"` | initial database to create |
 | bootstrap.initdb.owner | string | `"app"` | owner of the initial database that is created above |
 | bootstrap.initdb.secret.name | string | `"app-secret"` |  |
-| certificates.clientCASecret | string | `"my-postgres-client-cert"` | name of existing Kubernetes Secret for the postgresql client Certificate Authority cert, ignored if certificates.generate is true |
-| certificates.generate | bool | `true` | generate server and client certs using cert-manager. if true the following  are ignored: certificates.serverTLSSecret, certificates.serverCASecret, certificates.clientCASecret, and certificates.replicationTLSSecret |
-| certificates.replicationTLSSecret | string | `"my-postgres-client-cert"` | name of existing Kubernetes Secret for the postgresql client TLS cert ignored if certificates.generate is true |
-| certificates.serverCASecret | string | `"my-postgres-server-cert"` | name of existing Kubernetes Secret for the postgresql server Certificate Authority cert, ignored if certificates.generate is true |
-| certificates.serverTLSSecret | string | `"my-postgres-server-cert"` | name of existing Kubernetes Secret for the postgresql server TLS cert, ignored if certificates.generate is true |
+| certificates.client.clientCASecret | string | `""` | name of existing Kubernetes Secret for the postgresql client Certificate Authority cert, ignored if certificates.generate is true |
+| certificates.client.enabled | bool | `false` | enable using client certificates |
+| certificates.client.generate | bool | `false` | generate client certs using cert-manager. if true the following are ignored: certificates.clientCASecret, certificates.replicationTLSSecret |
+| certificates.client.replicationTLSSecret | string | `""` | name of existing Kubernetes Secret for the postgresql replication TLS cert ignored if certificates.generate is true |
+| certificates.server.enabled | bool | `false` | enable using server certificates |
+| certificates.server.generate | bool | `false` | generate server certs using cert-manager. if true the following are ignored: certificates.serverTLSSecret, certificates.serverCASecret |
+| certificates.server.serverCASecret | string | `""` | name of existing Kubernetes Secret for the postgresql server Certificate Authority cert, ignored if certificates.generate is true |
+| certificates.server.serverTLSSecret | string | `""` | name of existing Kubernetes Secret for the postgresql server TLS cert, ignored if certificates.generate is true |
 | instances | int | `3` |  |
 | monitoring.enablePodMonitor | bool | `false` | enable monitoring via Prometheus |
 | name | string | `"cnpg"` |  |

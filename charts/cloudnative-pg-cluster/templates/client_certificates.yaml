@@ -1,4 +1,4 @@
-{{- if .Values.certificates.generate }}
+{{- if and .Values.certificates.client.enabled .Values.certificates.client.generate }}
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
