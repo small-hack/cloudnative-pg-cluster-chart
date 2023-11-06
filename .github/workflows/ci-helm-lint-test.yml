@@ -58,7 +58,7 @@ jobs:
           helm repo update
           helm install cnpg-operator cnpg-operator/cloudnative-pg \
             --namespace cnpg-system \
-            --create-namespace cnpg-operator/cloudnative-pg
+            --create-namespace
 
       - name: Install CNPG cluster
         run: |
