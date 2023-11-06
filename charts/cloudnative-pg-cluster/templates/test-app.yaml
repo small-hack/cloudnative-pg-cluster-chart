@@ -42,10 +42,10 @@ spec:
       volumes:
         - name: secret-volume-root-ca
           secret:
-            secretName: "{{ .Values.name }}-server"
+            secretName: "{{ .Values.name }}-server-cert"
             defaultMode: 0600
         - name: secret-volume-app
           secret:
-            secretName: "{{ .Values.name }}-{{ .Values.bootstrap.initdb.owner }}"
+            secretName: "{{ .Values.name }}-{{ .Values.bootstrap.initdb.owner }}-cert"
             defaultMode: 0600
 {{- end }}
