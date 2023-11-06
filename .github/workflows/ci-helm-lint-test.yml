@@ -53,8 +53,10 @@ jobs:
             --create-namespace \
             --set installCRDs=true \
             --set prometheus.enabled=false
-          helm install cnpg-operator --namespace cnpg-system \
-            --create-namespace cnpg-operator/cloudnative-pg
+          helm install cnpg-operator cnpg-operator/cloudnative-pg \
+            --namespace cnpg-system \
+            --create-namespace cnpg-operator/cloudnative-pg \
+            --wait
           helm install cnpg-cluster cnpg-cluster/cnpg-cluster \
             --set instances=1 \
             --set bootstrap.initdb.secret.name=null \
