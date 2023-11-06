@@ -9,8 +9,8 @@ This [helm chart](https://small-hack.github.io/cloudnative-pg-tenant-chart/) is 
 helm repo add cnpg https://small-hack.github.io/cloudnative-pg-tenant-chart
 
 # get the values and edit them if needed
-helm show values cnpg/cnpg-tenant > values.yaml
+helm show values cnpg/cnpg-cluster > values.yaml
 
 # install the chart
-helm install cnpg cnpg/cnpg-tenant --values values.yaml
+helm install cnpg cnpg/cnpg-cluster --values values.yaml
 ```
