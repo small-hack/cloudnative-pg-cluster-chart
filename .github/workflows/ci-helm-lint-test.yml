@@ -108,6 +108,7 @@ jobs:
           EOF
             
       - name: Install CNPG cluster
+        working-directory: ./charts/cloudnative-pg-cluster
         run: |
           #helm repo add cnpg-cluster https://small-hack.github.io/cloudnative-pg-tenant-chart
           #helm repo update
