@@ -1,0 +1,51 @@
+{{- if and .Values.testApp.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{ .Values.name }}-cert-test"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "{{ .Values.name}}-webtest"
+  template:
+    metadata:
+      labels:
+        app: "{{ .Values.name}}-webtest"
+    spec:
+      containers:
+        - image: ghcr.io/cloudnative-pg/webtest:1.6.0
+          name: cert-test
+          volumeMounts:
+            - name: secret-volume-root-ca
+              mountPath: /etc/secrets/ca
+            - name: secret-volume-app
+              mountPath: /etc/secrets/app
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DATABASE_URL
+              value: >
+                sslkey=/etc/secrets/app/tls.key
+                sslcert=/etc/secrets/app/tls.crt
+                sslrootcert=/etc/secrets/ca/ca.crt
+                host={{ .Values.name }}-rw.{{ .Values.testApp.namespace }}.svc
+                dbname={{ .Values.bootstrap.initdb.database }}
+                user={{ .Values.bootstrap.initdb.owner }}
+                sslmode=verify-full
+            - name: SQL_QUERY
+              value: SELECT 1
+          readinessProbe:
+            httpGet:
+              port: 8080
+              path: /tx
+      volumes:
+        - name: secret-volume-root-ca
+          secret:
+            secretName: "{{ .Values.name }}-server-cert"
+            defaultMode: 0600
+        - name: secret-volume-app
+          secret:
+            secretName: "{{ .Values.name }}-{{ .Values.bootstrap.initdb.owner }}-cert"
+            defaultMode: 0600
+{{- end }}
