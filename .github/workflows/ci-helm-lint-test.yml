@@ -107,6 +107,8 @@ jobs:
           testApp:
             enabled: true
           EOF
+          
+          cat test-values.yaml
             
       - name: Install CNPG cluster
         working-directory: ./charts/cloudnative-pg-cluster
@@ -114,7 +116,8 @@ jobs:
           #helm repo add cnpg-cluster https://small-hack.github.io/cloudnative-pg-tenant-chart
           #helm repo update
           #helm install cnpg-cluster cnpg-cluster/cnpg-cluster --values test-values.yaml
-          helm template . -f values.yaml > deploy.yaml
+          ls -hal
+          helm template . -f test-values.yaml > deploy.yaml
           cat deploy.yaml
           
       - name: Run chart-testing (install)
