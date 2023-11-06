@@ -39,6 +39,10 @@ spec:
             httpGet:
               port: 8080
               path: /tx
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            failureThreshold: 6
+            successThreshold: 1
       volumes:
         - name: secret-volume-root-ca
           secret:
