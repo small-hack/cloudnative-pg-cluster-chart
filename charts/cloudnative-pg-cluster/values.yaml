@@ -59,10 +59,10 @@ certificates:
     serverCASecret: ""
   client:
     # -- enable using client certificates
-    enabled: false
+    enabled: true
     # -- generate client certs using cert-manager. if true the following are
     # ignored: certificates.clientCASecret, certificates.replicationTLSSecret
-    generate: false
+    generate: true
     # -- name of existing Kubernetes Secret for the postgresql client Certificate
     # Authority cert, ignored if certificates.generate is true
     clientCASecret: ""
@@ -90,3 +90,11 @@ postgresql:
 storage:
   # -- how much storage to allocate to the postgresql cluster
   size: 1Gi
+
+testApp:
+  ## -- create a test deployment to verify db connectivity. 
+  # Populates user and DB from the Initdb owner and database values
+  enabled: false
+  ## -- namespace where the read-write postgres service exists
+  namespace: "default"
+

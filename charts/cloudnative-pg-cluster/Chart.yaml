@@ -2,7 +2,7 @@ apiVersion: v2
 name: cnpg-cluster
 description: Create postgres tenant clusters managed by the CNPG Operator
 type: application
-version: 0.3.0
+version: 0.3.1
 
 maintainers:
   - name: "cloudymax"
