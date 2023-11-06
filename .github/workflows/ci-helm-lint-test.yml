@@ -69,8 +69,9 @@ jobs:
             --create-namespace
 
       - name: Creat testing values
+        working-directory: ./charts/cloudnative-pg-cluster
         run: |
-          cat << EOF > values.yaml
+          cat << EOF > test-values.yaml
           name: "cnpg"
           instances: 1
           superuserSecret:
@@ -112,7 +113,7 @@ jobs:
         run: |
           #helm repo add cnpg-cluster https://small-hack.github.io/cloudnative-pg-tenant-chart
           #helm repo update
-          #helm install cnpg-cluster cnpg-cluster/cnpg-cluster --values values.yaml
+          #helm install cnpg-cluster cnpg-cluster/cnpg-cluster --values test-values.yaml
           helm template . -f values.yaml > deploy.yaml
           cat deploy.yaml
           
