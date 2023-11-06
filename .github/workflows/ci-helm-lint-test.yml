@@ -42,11 +42,13 @@ jobs:
         uses: helm/kind-action@v1.8.0
         if: steps.list-changed.outputs.changed == 'true'
 
-      - name: verify cluster
+      - name: verify cluster and local path
         run: |
           kubectl config set-context kind-chart-testing
           kubectl cluster-info
           kubectl get pods -A
+          pwd
+          ls -hal
           
       - name: Install Certmanager
         run: |
