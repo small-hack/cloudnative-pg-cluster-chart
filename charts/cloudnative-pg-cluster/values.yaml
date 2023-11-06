@@ -92,10 +92,9 @@ storage:
   size: 1Gi
 
 testApp:
-  ## -- create a test deployment to verify db connectivity. 
+  ## -- create a test deployment to verify db connectivity.
   # Populates user and DB from the Initdb owner and database values
   # Requires server, client, and user certificate generation to be enabled.
   enabled: false
   ## -- namespace where the read-write postgres service exists
   namespace: "default"
-
