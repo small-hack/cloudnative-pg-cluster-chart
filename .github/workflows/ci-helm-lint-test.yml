@@ -56,6 +56,9 @@ jobs:
             --create-namespace cnpg/cloudnative-pg
           helm install cnpg cnpg/cnpg-cluster \
             --set instances=1 \
+            --set bootstrap.secret.name=null \
+            --set bootstrap.secret.backup=null \
+            --set bootstrap.secret.scheduledBackup=null \
             --set certificate.server.enabled=true \
             --set certificate.server.generate=true \
             --set certificate.client.enabled=true \
