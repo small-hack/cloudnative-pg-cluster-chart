@@ -2,9 +2,6 @@ name: "cnpg"
 
 instances: 3
 
-# superuserSecret:
-#  name: superuser-secret
-
 bootstrap:
   initdb:
     # -- initial database to create
@@ -16,11 +13,11 @@ bootstrap:
     # list of SQL commands to run as part of the init scripts, example:
     # postInitSQL:
     #  - CREATE ROLE friend
-    # Specify an external cluster to bootstrap from 
+    # Specify an external cluster to bootstrap from
     # recovery:
     #  source: clusterBackup
 
-#externalClusters:
+externalClusters: []
 #  # -- name of external/existing cluster
 #  - name: clusterBackup
 #    barmanObjectStore:

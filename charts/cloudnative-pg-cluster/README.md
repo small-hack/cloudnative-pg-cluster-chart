@@ -43,7 +43,6 @@ Create postgres tenant clusters managed by the CNPG Operator
 | scheduledBackup.spec.cluster.name | string | `"pg-backup"` |  |
 | scheduledBackup.spec.schedule | string | `"0 0 0 * * *"` | crontab style schedule to run the backups |
 | storage.size | string | `"1Gi"` | how much storage to allocate to the postgresql cluster |
-| superuserSecret.name | string | `"superuser-secret"` |  |
 | testApp.enabled | bool | `false` |  |
 
 ----------------------------------------------
