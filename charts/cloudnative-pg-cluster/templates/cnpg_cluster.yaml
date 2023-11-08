@@ -11,6 +11,13 @@ spec:
     {{- toYaml . | nindent 4 }}
   {{- end }}
   {{- end }}
+  {{- if .Values.externalClusters }}
+  externalClusters:
+    {{- range $reg, $props := .Values.externalClusters }}
+    - name: {{ $props.name }}
+    {{- toYaml . | nindent 6 }}
+  {{- end }}
+  {{- end }}
   monitoring:
     enablePodMonitor: {{ .Values.monitoring.enablePodMonitor }}
   {{- with .Values.postgresql }}

@@ -2,26 +2,47 @@ name: "cnpg"
 
 instances: 3
 
-superuserSecret:
-  name: superuser-secret
-
 bootstrap:
   initdb:
     # -- initial database to create
     database: app
     # -- owner of the initial database that is created above
     owner: app
-    secret:
-      name: app-secret
+    # secret:
+    #  name: app-secret
     # list of SQL commands to run as part of the init scripts, example:
     # postInitSQL:
     #  - CREATE ROLE friend
+    # Specify an external cluster to bootstrap from
+    # recovery:
+    #  source: clusterBackup
+
+externalClusters: []
+#  # -- name of external/existing cluster
+#  - name: clusterBackup
+#    barmanObjectStore:
+#      destinationPath: "s3://backups"
+#      endpointURL: "http://HOST:PORT"
+#      s3Credentials:
+#        accessKeyId:
+#          # -- existing Kubernetes Secret to use for S3 access key ID
+#          name: "aws-creds"
+#          # -- key in Kubernetes Secret to use for S3 access key ID
+#          key: "ACCESS_KEY_ID"
+#        secretAccessKey:
+#          # -- existing Kubernetes Secret to use for S3 secret key
+#          name: "aws-creds"
+#          # -- key in Kubernetes Secret to use for S3 secret key
+#          key: "ACCESS_SECRET_KEY"
+#      wal:
+#        maxParallel: 8
 
 backup:
   # -- how long to keep backups for
   retentionPolicy: "30d"
   barmanObjectStore:
-    destinationPath: "backups"
+    destinationPath: "s3://backups"
+    endpointURL: "http://HOST:PORT"
     s3Credentials:
       accessKeyId:
         # -- existing Kubernetes Secret to use for S3 access key ID
@@ -96,5 +117,3 @@ testApp:
   # Populates user and DB from the Initdb owner and database values
   # Requires server, client, and user certificate generation to be enabled.
   enabled: false
-  ## -- namespace where the read-write postgres service exists
-  namespace: "default"
