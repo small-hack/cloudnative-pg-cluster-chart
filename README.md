@@ -6,7 +6,7 @@ This [helm chart](https://small-hack.github.io/cloudnative-pg-tenant-chart/) is 
 
 ```bash
 # add the helm repo locally
-helm repo add cnpg https://small-hack.github.io/cloudnative-pg-tenant-chart
+helm repo add cnpg https://small-hack.github.io/cloudnative-pg-cluster-chart
 
 # get the values and edit them if needed
 helm show values cnpg/cnpg-cluster > values.yaml
