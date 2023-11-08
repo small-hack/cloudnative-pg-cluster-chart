@@ -2,7 +2,7 @@ name: "cnpg"
 
 instances: 3
 
-#superuserSecret:
+# superuserSecret:
 #  name: superuser-secret
 
 bootstrap:
