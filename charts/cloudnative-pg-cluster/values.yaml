@@ -14,8 +14,8 @@ bootstrap:
     # postInitSQL:
     #  - CREATE ROLE friend
     # Specify an external cluster to bootstrap from
-    # recovery:
-    #  source: clusterBackup
+  # recovery:
+  #   source: clusterBackup
 
 externalClusters: []
 #  # -- name of external/existing cluster
