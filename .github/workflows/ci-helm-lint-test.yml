@@ -82,28 +82,27 @@ jobs:
                 name: null
           certificates:
             server:
-              enabled: true
-              generate: true
+              enabled: false
+              generate: false
               serverTLSSecret: ""
               serverCASecret: ""
             client:
-              enabled: true
-              generate: true
+              enabled: false
+              generate: false
               clientCASecret: ""
               replicationTLSSecret: ""
             user:
-              enabled: true
+              enabled: false
               username: "app"
           monitoring:
             enablePodMonitor: false
           postgresql:
             pg_hba:
-              - hostnossl all all 0.0.0.0/0 reject
-              - hostssl all all 0.0.0.0/0 cert clientcert=verify-full
+              - hostssl all all all cert
           storage:
             size: 1Gi
           testApp:
-            enabled: true
+            enabled: false
           EOF
             
       - name: Install CNPG cluster
