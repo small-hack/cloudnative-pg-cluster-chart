@@ -84,17 +84,17 @@ jobs:
                 name: null
           certificates:
             server:
-              enabled: false
-              generate: false
+              enabled: true
+              generate: true
               serverTLSSecret: ""
               serverCASecret: ""
             client:
-              enabled: false
-              generate: false
+              enabled: true
+              generate: true
               clientCASecret: ""
               replicationTLSSecret: ""
             user:
-              enabled: false
+              enabled: true
               username: "app"
           monitoring:
             enablePodMonitor: false
@@ -115,9 +115,6 @@ jobs:
           helm install cnpg-cluster cnpg-cluster/cnpg-cluster \
             --values test-values.yaml \
             --wait
-            
-          #helm template . -f test-values.yaml > deploy.yaml
-          #kubectl apply -f deploy.yaml
 
           ITER=0
           while true; do
@@ -125,7 +122,7 @@ jobs:
               echo "Cluster not ready"
               exit 1
             fi
-            READY_INSTANCES=$(kubectl get cluster cluster-example -o jsonpath='{.status.readyInstances}')
+            READY_INSTANCES=$(kubectl get cluster cnpg -o jsonpath='{.status.readyInstances}')
             if [[ "$READY_INSTANCES" == 3 ]]; then
               echo "Cluster up and running"
               break
