@@ -1,6 +1,6 @@
 # cnpg-cluster
 
-![Version: 0.3.6](https://img.shields.io/badge/Version-0.3.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.3.7](https://img.shields.io/badge/Version-0.3.7-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 Create postgres tenant clusters managed by the CNPG Operator
 
@@ -35,10 +35,12 @@ Create postgres tenant clusters managed by the CNPG Operator
 | certificates.user.enabled | bool | `false` | create a certificate for a user to connect to postgres using CertManager requires server and client certificate generation enabled |
 | certificates.user.username | string | `"app"` | name of the user to create a cert for, eg: the DbOwner specified earlier. This data populated into the commonName field of the certificate. |
 | externalClusters | list | `[]` |  |
-| instances | int | `3` |  |
+| imageName | string | `"ghcr.io/cloudnative-pg/postgresql:16.0"` | image to use for all tenant pods |
+| instances | int | `3` | number of postgres replicas minimum 1 required |
 | monitoring.enablePodMonitor | bool | `false` | enable monitoring via Prometheus |
 | name | string | `"cnpg"` |  |
 | postgresql.pg_hba | list | `["hostnossl all all 0.0.0.0/0 reject","hostssl all all 0.0.0.0/0 cert clientcert=verify-full"]` | records for the pg_hba.conf file. ref: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html |
+| primaryUpdateStrategy | string | `"unsupervised"` |  |
 | scheduledBackup.name | string | `"example-backup"` | name to use for your scheduled backup job |
 | scheduledBackup.spec.backupOwnerReference | string | `"self"` |  |
 | scheduledBackup.spec.cluster.name | string | `"pg-backup"` |  |

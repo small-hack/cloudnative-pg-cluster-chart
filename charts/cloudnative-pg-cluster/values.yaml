@@ -1,6 +1,18 @@
 name: "cnpg"
 
+# -- number of postgres replicas
+# minimum 1 required
 instances: 3
+
+# -- image to use for all tenant pods
+imageName: ghcr.io/cloudnative-pg/postgresql:16.0
+
+# Examples of rolling update strategy:
+# unsupervised: automated update of the primary once all
+#                 replicas have been upgraded (default)
+# supervised: requires manual supervision to perform
+#               the switchover of the primary
+primaryUpdateStrategy: unsupervised
 
 bootstrap:
   initdb:
