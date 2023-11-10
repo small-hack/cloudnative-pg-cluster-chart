@@ -58,7 +58,8 @@ jobs:
             --namespace cert-manager \
             --create-namespace \
             --set installCRDs=true \
-            --set prometheus.enabled=false
+            --set prometheus.enabled=false \
+            --wait
             
       - name: Install CNPG Operator
         run: |
@@ -66,16 +67,15 @@ jobs:
           helm repo update
           helm install cnpg-operator cnpg-operator/cloudnative-pg \
             --namespace cnpg-system \
-            --create-namespace
+            --create-namespace \
+            --wait
 
       - name: Creat testing values
         working-directory: ./charts/cloudnative-pg-cluster
         run: |
           cat << EOF > test-values.yaml
           name: "cnpg"
-          instances: 1
-          superuserSecret:
-            name: null
+          instances: 3
           bootstrap:
             initdb:
               database: app
@@ -100,22 +100,37 @@ jobs:
             enablePodMonitor: false
           postgresql:
             pg_hba:
-              - hostnossl all all 0.0.0.0/0 reject
-              - hostssl all all 0.0.0.0/0 cert clientcert=verify-full
+              - hostssl all all all cert
           storage:
             size: 1Gi
           testApp:
-            enabled: true
+            enabled: false
           EOF
             
       - name: Install CNPG cluster
         working-directory: ./charts/cloudnative-pg-cluster
         run: |
-          #helm repo add cnpg-cluster https://small-hack.github.io/cloudnative-pg-tenant-chart
-          #helm repo update
-          #helm install cnpg-cluster cnpg-cluster/cnpg-cluster --values test-values.yaml
-          helm template . -f test-values.yaml > deploy.yaml
-          kubectl apply -f deploy.yaml
+          helm repo add cnpg-cluster https://small-hack.github.io/cloudnative-pg-cluster-chart
+          helm repo update
+          helm install cnpg-cluster cnpg-cluster/cnpg-cluster \
+            --values test-values.yaml
+
+          ITER=0
+          while true; do
+            if [[ $ITER -ge 300 ]]; then
+              echo "Cluster not ready"
+              exit 1
+            fi
+            READY_INSTANCES=$(kubectl get cluster cnpg -o jsonpath='{.status.readyInstances}')
+            if [[ "$READY_INSTANCES" == 3 ]]; then
+              echo "Cluster up and running"
+              break
+            fi
+            sleep 1
+            STATUS=$(kubectl get cluster)
+            echo "$STATUS"
+            (( ++ITER ))
+          done
           
       - name: Run chart-testing (install)
         id: install
