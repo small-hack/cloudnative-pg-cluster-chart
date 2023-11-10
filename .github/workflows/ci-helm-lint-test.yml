@@ -116,6 +116,21 @@ jobs:
           #helm install cnpg-cluster cnpg-cluster/cnpg-cluster --values test-values.yaml
           helm template . -f test-values.yaml > deploy.yaml
           kubectl apply -f deploy.yaml
+
+          ITER=0
+          while true; do
+            if [[ $ITER -ge 300 ]]; then
+              echo "Cluster not ready"
+              exit 1
+            fi
+            READY_INSTANCES=$(kubectl get cluster cluster-example -o jsonpath='{.status.readyInstances}')
+            if [[ "$READY_INSTANCES" == 3 ]]; then
+              echo "Cluster up and running"
+              break
+            fi
+            sleep 1
+            (( ++ITER ))
+          done
           
       - name: Run chart-testing (install)
         id: install
