@@ -74,8 +74,6 @@ jobs:
           cat << EOF > test-values.yaml
           name: "cnpg"
           instances: 1
-          superuserSecret:
-            name: null
           bootstrap:
             initdb:
               database: app
@@ -111,11 +109,11 @@ jobs:
       - name: Install CNPG cluster
         working-directory: ./charts/cloudnative-pg-cluster
         run: |
-          #helm repo add cnpg-cluster https://small-hack.github.io/cloudnative-pg-tenant-chart
-          #helm repo update
-          #helm install cnpg-cluster cnpg-cluster/cnpg-cluster --values test-values.yaml
-          helm template . -f test-values.yaml > deploy.yaml
-          kubectl apply -f deploy.yaml
+          helm repo add cnpg-cluster https://small-hack.github.io/cloudnative-pg-cluster-chart
+          helm repo update
+          helm install cnpg-cluster cnpg-cluster/cnpg-cluster --values test-values.yaml
+          #helm template . -f test-values.yaml > deploy.yaml
+          #kubectl apply -f deploy.yaml
 
           ITER=0
           while true; do
