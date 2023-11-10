@@ -58,7 +58,8 @@ jobs:
             --namespace cert-manager \
             --create-namespace \
             --set installCRDs=true \
-            --set prometheus.enabled=false
+            --set prometheus.enabled=false \
+            --wait
             
       - name: Install CNPG Operator
         run: |
@@ -66,8 +67,8 @@ jobs:
           helm repo update
           helm install cnpg-operator cnpg-operator/cloudnative-pg \
             --namespace cnpg-system \
-            --set "webhook.port=443" \
-            --create-namespace
+            --create-namespace \
+            --wait
 
       - name: Creat testing values
         working-directory: ./charts/cloudnative-pg-cluster
@@ -111,7 +112,10 @@ jobs:
         run: |
           helm repo add cnpg-cluster https://small-hack.github.io/cloudnative-pg-cluster-chart
           helm repo update
-          helm install cnpg-cluster cnpg-cluster/cnpg-cluster --values test-values.yaml
+          helm install cnpg-cluster cnpg-cluster/cnpg-cluster \
+            --values test-values.yaml \
+            --wait
+            
           #helm template . -f test-values.yaml > deploy.yaml
           #kubectl apply -f deploy.yaml
 
