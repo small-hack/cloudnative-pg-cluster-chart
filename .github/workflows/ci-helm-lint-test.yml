@@ -66,6 +66,7 @@ jobs:
           helm repo update
           helm install cnpg-operator cnpg-operator/cloudnative-pg \
             --namespace cnpg-system \
+            --set "webhook.port=443" \
             --create-namespace
 
       - name: Creat testing values
