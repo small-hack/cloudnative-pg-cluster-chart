@@ -7,6 +7,14 @@ instances: 3
 # -- image to use for all tenant pods
 imageName: ghcr.io/cloudnative-pg/postgresql:16.0
 
+# -- CNPG disables the postgres superuser by default
+# must be explicitly enabled
+enableSuperuserAccess: false
+
+# -- name of existing secret to use as superuser redentials
+# will be randomly generated if not specified.
+superuserSecret: null
+
 # Examples of rolling update strategy:
 # unsupervised: automated update of the primary once all
 #                 replicas have been upgraded (default)
