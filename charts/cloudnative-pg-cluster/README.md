@@ -38,7 +38,7 @@ Create postgres tenant clusters managed by the CNPG Operator
 | externalClusters | list | `[]` |  |
 | imageName | string | `"ghcr.io/cloudnative-pg/postgresql:16.0"` | image to use for all tenant pods |
 | instances | int | `3` | number of postgres replicas minimum 1 required |
-| managed | object | `{"roles":null}` | See https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-RoleConfiguration for explanation of all options |
+| managed | object | `{"roles":[]}` | See https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-RoleConfiguration for explanation of all options |
 | monitoring.enablePodMonitor | bool | `false` | enable monitoring via Prometheus |
 | name | string | `"cnpg"` |  |
 | postgresql.pg_hba | list | `["hostnossl all all 0.0.0.0/0 reject","hostssl all all 0.0.0.0/0 cert clientcert=verify-full"]` | records for the pg_hba.conf file. ref: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html |

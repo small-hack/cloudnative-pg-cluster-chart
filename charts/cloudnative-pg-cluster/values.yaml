@@ -39,7 +39,7 @@ bootstrap:
 
 # -- See https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-RoleConfiguration for explanation of all options
 managed:
-  roles:
+  roles: []
   #  - name: friend
   #    ensure: present
   #    comment: "friendly user"
