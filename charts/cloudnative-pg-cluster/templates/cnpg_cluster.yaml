@@ -6,6 +6,8 @@ metadata:
 spec:
   instances: {{ .Values.instances }}
   imageName: {{ .Values.imageName }}
+  enableSuperuserAccess: {{ .Values.enableSuperuserAccess }}
+  superuserSecret: {{ .Values.superuserSecret }}
   primaryUpdateStrategy: {{ .Values.primaryUpdateStrategy }}
   {{- if .Values.backup }}
   {{- with .Values.backup }}
