@@ -13,7 +13,7 @@ enableSuperuserAccess: false
 
 # -- name of existing secret to use as superuser redentials
 # will be randomly generated if not specified.
-superuserSecret: null
+superuserSecret: ""
 
 # Examples of rolling update strategy:
 # unsupervised: automated update of the primary once all
