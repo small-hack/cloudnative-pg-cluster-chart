@@ -1,6 +1,6 @@
 # cnpg-cluster
 
-![Version: 0.3.8](https://img.shields.io/badge/Version-0.3.8-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.3.9](https://img.shields.io/badge/Version-0.3.9-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 Create postgres tenant clusters managed by the CNPG Operator
 
@@ -33,7 +33,7 @@ Create postgres tenant clusters managed by the CNPG Operator
 | certificates.server.serverCASecret | string | `""` | name of existing Kubernetes Secret for the postgresql server Certificate Authority cert, ignored if certificates.generate is true |
 | certificates.server.serverTLSSecret | string | `""` | name of existing Kubernetes Secret for the postgresql server TLS cert, ignored if certificates.generate is true |
 | certificates.user.enabled | bool | `false` | create a certificate for a user to connect to postgres using CertManager requires server and client certificate generation enabled |
-| certificates.user.username | string | `"app"` | name of the user to create a cert for, eg: the DbOwner specified earlier. This data populated into the commonName field of the certificate. |
+| certificates.user.username | list | `["app"]` | List of names of users to create a cert for, eg: the DbOwner specified earlier. This data populated into the commonName field of the certificate. |
 | enableSuperuserAccess | bool | `false` | CNPG disables the postgres superuser by default must be explicitly enabled |
 | externalClusters | list | `[]` |  |
 | imageName | string | `"ghcr.io/cloudnative-pg/postgresql:16.0"` | image to use for all tenant pods |

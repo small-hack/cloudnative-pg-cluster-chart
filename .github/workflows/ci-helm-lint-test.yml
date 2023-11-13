@@ -95,7 +95,8 @@ jobs:
               replicationTLSSecret: ""
             user:
               enabled: true
-              username: "app"
+              username: 
+                - "app"
           monitoring:
             enablePodMonitor: false
           postgresql:
