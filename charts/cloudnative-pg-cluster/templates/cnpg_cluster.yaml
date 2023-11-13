@@ -64,3 +64,12 @@ spec:
   {{- end }}
   {{- end }}
   {{- end }}
+  {{- if .Values.managed.roles }}
+  managed:
+    roles:
+    {{- range $reg, $props := .Values.managed.roles }}
+    - name: {{ $props.name }}
+    {{- toYaml . | nindent 6 }}
+  {{- end }}
+  {{- end }}
+
