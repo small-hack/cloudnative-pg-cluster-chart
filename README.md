@@ -1,6 +1,8 @@
 # CloudNativePG Cluster Chart
 
-This [helm chart](https://small-hack.github.io/cloudnative-pg-tenant-chart/) is intended to be the Cluster helm chart component to the [CloudNativePG operator helm chart](https://github.com/cloudnative-pg/charts). Docs autogeneratated from the values.yaml are slowly being put together in the chart directory's [README.md](https://github.com/small-hack/cloudnative-pg-tenant-chart/tree/main/charts/cloudnative-pg-tenant#readme).
+This [helm chart](https://small-hack.github.io/cloudnative-pg-tenant-chart/) is intended to be the Cluster helm chart component to the [CloudNativePG operator helm chart](https://github.com/cloudnative-pg/charts).
+
+Docs autogeneratated from the [values.yaml](charts/cloudnative-pg-cluster/values.yaml) are slowly being put together in the chart directory's [README.md](./charts/cloudnative-pg-cluster/README.md).
 
 ## TLDR
 
