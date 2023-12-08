@@ -2,6 +2,20 @@ apiVersion: v1
 entries:
   cnpg-cluster:
   - apiVersion: v2
+    created: "2023-12-08T10:05:04.053463426Z"
+    description: Create postgres tenant clusters managed by the CNPG Operator
+    digest: d5b347aabf5f7cebc476dcd990440d42f2424db829b8b586c10b6863cef8bff1
+    maintainers:
+    - name: cloudymax
+      url: https://github.com/cloudymax
+    - name: jessebot
+      url: https://github.com/jessebot
+    name: cnpg-cluster
+    type: application
+    urls:
+    - https://github.com/small-hack/cloudnative-pg-cluster-chart/releases/download/cnpg-cluster-0.3.11/cnpg-cluster-0.3.11.tgz
+    version: 0.3.11
+  - apiVersion: v2
     created: "2023-11-13T15:10:41.381643307Z"
     description: Create postgres tenant clusters managed by the CNPG Operator
     digest: d716a41f316c0c07ffe4f851dd045d5912c99a5fd71d27c39cceffd5950558d9
@@ -290,4 +304,4 @@ entries:
     urls:
     - https://github.com/cloudymax/cloudnative-pg-tenant-chart/releases/download/cnpg-tenant-0.0.1/cnpg-tenant-0.0.1.tgz
     version: 0.0.1
-generated: "2023-11-13T15:10:41.381715421Z"
+generated: "2023-12-08T10:05:04.053600923Z"
