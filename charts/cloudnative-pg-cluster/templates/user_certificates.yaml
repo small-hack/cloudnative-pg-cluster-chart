@@ -1,14 +1,15 @@
 {{- if and .Values.certificates.user.enabled }}
 {{- range .Values.certificates.user.username }}
 {{- $username := . | replace "_" "-" -}}
----
+{{ print "---" | nindent 0 }}
 apiVersion: v1
 kind: Secret
 metadata:
   name: "{{ $.Values.name }}-{{ $username }}-cert"
   labels:
     cnpg.io/reload: ""
----
+
+{{ print "---" | nindent 0 }}
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -21,6 +22,6 @@ spec:
   issuerRef:
     name: "{{ $.Values.name }}-client-ca-issuer" 
     kind: Issuer
-    group: cert-manager.io
+    group: "cert-manager.io"
 {{- end }}
 {{- end }}
