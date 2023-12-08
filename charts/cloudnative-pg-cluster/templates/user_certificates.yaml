@@ -1,19 +1,20 @@
 {{- if and .Values.certificates.user.enabled }}
 {{- range .Values.certificates.user.username }}
+{{- $username := . | replace "_" "-" -}}
 ---
 apiVersion: v1
 kind: Secret
 metadata:
-  name: "{{ $.Values.name }}-{{ . }}-cert"
+  name: "{{ $.Values.name }}-{{ $username }}-cert"
   labels:
     cnpg.io/reload: ""
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: "{{ $.Values.name }}-{{ . }}-cert"
+  name: "{{ $.Values.name }}-{{ $username }}-cert"
 spec:
-  secretName: "{{ $.Values.name }}-{{ . }}-cert"
+  secretName: "{{ $.Values.name }}-{{ $username }}-cert"
   usages:
     - client auth
   commonName: {{ . }}
