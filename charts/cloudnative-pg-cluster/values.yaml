@@ -145,6 +145,16 @@ storage:
   # -- how much storage to allocate to the postgresql cluster
   size: 1Gi
 
+resources:
+  # -- minimum resources guaranteed for pods
+  requests:
+    cpu: 500
+    memory: "512Mi"
+  # -- resource limit for pods
+  limits:
+    cpu: 1000
+    memory: "1024Mi"
+
 testApp:
   ## -- create a test deployment to verify db connectivity.
   # Populates user and DB from the Initdb owner and database values
