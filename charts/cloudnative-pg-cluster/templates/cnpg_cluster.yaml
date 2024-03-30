@@ -28,6 +28,8 @@ spec:
   postgresql:
     {{- toYaml . | nindent 4 }}
   {{- end }}
+  resources:
+  {{- toYaml .Values.resources | nindent 4 }}
   storage:
     size: {{ .Values.storage.size }}
   bootstrap:
@@ -72,4 +74,3 @@ spec:
     {{- toYaml . | nindent 6 }}
   {{- end }}
   {{- end }}
-
