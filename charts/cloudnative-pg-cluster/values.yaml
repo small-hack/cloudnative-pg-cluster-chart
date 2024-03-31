@@ -150,11 +150,11 @@ resources:
   # -- minimum resources guaranteed for pods
   requests:
     cpu: "50m"
-    memory: "32Mi"
+    memory: "64Mi"
   # -- resource limit for pods
   limits:
-    cpu: "100m"
-    memory: "128Mi"
+    cpu: "1000m"
+    memory: "512Mi"
 
 testApp:
   ## -- create a test deployment to verify db connectivity.

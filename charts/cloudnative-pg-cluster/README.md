@@ -43,8 +43,8 @@ Create postgres tenant clusters managed by the CNPG Operator
 | name | string | `"cnpg"` |  |
 | postgresql.pg_hba | list | `["hostnossl all all 0.0.0.0/0 reject","hostssl all all 0.0.0.0/0 cert clientcert=verify-full"]` | records for the pg_hba.conf file. ref: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html |
 | primaryUpdateStrategy | string | `"unsupervised"` |  |
-| resources.limits | object | `{"cpu":"1000m","memory":"1024Mi"}` | resource limit for pods |
-| resources.requests | object | `{"cpu":"100m","memory":"128Mi"}` | minimum resources guaranteed for pods |
+| resources.limits | object | `{"cpu":"1000m","memory":"512Mi"}` | resource limit for pods |
+| resources.requests | object | `{"cpu":"50m","memory":"64Mi"}` | minimum resources guaranteed for pods |
 | scheduledBackup.name | string | `"example-backup"` | name to use for your scheduled backup job |
 | scheduledBackup.spec.backupOwnerReference | string | `"self"` |  |
 | scheduledBackup.spec.cluster.name | string | `"pg-backup"` |  |
