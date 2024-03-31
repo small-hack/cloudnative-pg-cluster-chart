@@ -1,146 +1,38 @@
-name: Lint and Test Chart
+name: Release
 
 on:
-  pull_request:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
     paths:
       - 'charts/**'
-  workflow_dispatch:
-
-permissions:
-  contents: read
 
 jobs:
-  lint:
-    name: Lint
+  release:
+    environment: helm-release
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: "0"
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
       - name: Install Helm
         uses: azure/setup-helm@v3.5
+        id: helm-install
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up chart-testing
-        uses: helm/chart-testing-action@v2.6.1
-
-      - name: Run chart-testing (list-changed)
-        id: list-changed
-        run: |
-          changed=$(ct list-changed --target-branch ${{ github.event.repository.default_branch }})
-          #if [[ -n "$changed" ]]; then
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          #fi
-
-      - name: Run chart-testing (lint)
-        id: lint
-        if: steps.list-changed.outputs.changed == 'true'
-        run: ct lint --target-branch ${{ github.event.repository.default_branch }}
-
-      - name: Create kind cluster
-        uses: helm/kind-action@v1.9.0
-        if: steps.list-changed.outputs.changed == 'true'
-
-      - name: verify cluster and local path
-        run: |
-          kubectl config set-context kind-chart-testing
-          kubectl cluster-info
-          kubectl get pods -A
-          pwd
-          ls -hal
-          
-      - name: Install Certmanager
-        run: |
-          helm repo add jetstack https://charts.jetstack.io
-          helm repo update
-          helm install cert-manager jetstack/cert-manager \
-            --namespace cert-manager \
-            --create-namespace \
-            --set installCRDs=true \
-            --set prometheus.enabled=false \
-            --wait
-            
-      - name: Install CNPG Operator
-        run: |
-          helm repo add cnpg-operator https://cloudnative-pg.github.io/charts
-          helm repo update
-          helm install cnpg-operator cnpg-operator/cloudnative-pg \
-            --namespace cnpg-system \
-            --create-namespace \
-            --wait
-
-      - name: Creat testing values
-        working-directory: ./charts/cloudnative-pg-cluster
-        run: |
-          cat << EOF > test-values.yaml
-          name: "cnpg"
-          instances: 3
-          bootstrap:
-            initdb:
-              database: app
-              owner: app
-              secret:
-                name: null
-          certificates:
-            server:
-              enabled: true
-              generate: true
-              serverTLSSecret: ""
-              serverCASecret: ""
-            client:
-              enabled: true
-              generate: true
-              clientCASecret: ""
-              replicationTLSSecret: ""
-            user:
-              enabled: true
-              username: 
-                - "app"
-          monitoring:
-            enablePodMonitor: false
-          postgresql:
-            pg_hba:
-              - hostssl all all all cert
-          resources:
-            requests:
-              cpu: "50m"
-              memory: "256Mi"
-            limits:
-              cpu: "1000m"
-              memory: "1024Mi"
-          storage:
-            size: 1Gi
-          testApp:
-            enabled: false
-          EOF
-            
-      - name: Install CNPG cluster
-        working-directory: ./charts/cloudnative-pg-cluster
-        run: |
-          helm repo add cnpg-cluster https://small-hack.github.io/cloudnative-pg-cluster-chart
-          helm repo update
-          helm install cnpg-cluster cnpg-cluster/cnpg-cluster \
-            --values test-values.yaml
-
-          ITER=0
-          while true; do
-            if [[ $ITER -ge 300 ]]; then
-              echo "Cluster not ready"
-              exit 1
-            fi
-            READY_INSTANCES=$(kubectl get cluster cnpg -o jsonpath='{.status.readyInstances}')
-            if [[ "$READY_INSTANCES" == 3 ]]; then
-              echo "Cluster up and running"
-              break
-            fi
-            sleep 1
-            STATUS=$(kubectl get cluster)
-            echo "$STATUS"
-            (( ++ITER ))
-          done
-          
-      - name: Run chart-testing (install)
-        id: install
-        if: steps.list-changed.outputs.changed == 'true'
-        run: ct install --target-branch ${{ github.event.repository.default_branch }}
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_GENERATE_RELEASE_NOTES: true
