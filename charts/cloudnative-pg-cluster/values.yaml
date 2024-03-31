@@ -148,11 +148,11 @@ storage:
 resources:
   # -- minimum resources guaranteed for pods
   requests:
-    cpu: 500
-    memory: "512Mi"
+    cpu: 100m
+    memory: "128Mi"
   # -- resource limit for pods
   limits:
-    cpu: 1000
+    cpu: 1000m
     memory: "1024Mi"
 
 testApp:
