@@ -145,15 +145,16 @@ storage:
   # -- how much storage to allocate to the postgresql cluster
   size: 1Gi
 
-resources:
+# from https://cloudnative-pg.io/documentation/1.22/resource_management/
+resources: {}
   # -- minimum resources guaranteed for pods
-  requests:
-    cpu: 500
-    memory: "512Mi"
+  # requests:
+  #   cpu: "50m"
+  #   memory: "64Mi"
   # -- resource limit for pods
-  limits:
-    cpu: 1000
-    memory: "1024Mi"
+  # limits:
+  #   cpu: "1000m"
+  #   memory: "512Mi"
 
 testApp:
   ## -- create a test deployment to verify db connectivity.
