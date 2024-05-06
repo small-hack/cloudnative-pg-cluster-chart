@@ -9,11 +9,9 @@ spec:
   enableSuperuserAccess: {{ .Values.enableSuperuserAccess }}
   superuserSecret: {{ .Values.superuserSecret }}
   primaryUpdateStrategy: {{ .Values.primaryUpdateStrategy }}
-  {{- if .Values.backup }}
   {{- with .Values.backup }}
   backup:
     {{- toYaml . | nindent 4 }}
-  {{- end }}
   {{- end }}
   {{- if .Values.externalClusters }}
   externalClusters:
@@ -42,7 +40,7 @@ spec:
     {{- end }}
     {{- end }}
     {{- if .Values.bootstrap.recovery }}
-    {{- with .Values.bootstrap.recovery }}   
+    {{- with .Values.bootstrap.recovery }}
     recovery:
       {{- toYaml . | nindent 6 }}
     {{- end }}

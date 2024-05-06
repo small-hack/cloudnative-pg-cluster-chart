@@ -15,13 +15,7 @@ Create postgres tenant clusters managed by the CNPG Operator
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| backup.barmanObjectStore.destinationPath | string | `"s3://backups"` |  |
-| backup.barmanObjectStore.endpointURL | string | `"http://HOST:PORT"` |  |
-| backup.barmanObjectStore.s3Credentials.accessKeyId.key | string | `"ACCESS_KEY_ID"` | key in Kubernetes Secret to use for S3 access key ID |
-| backup.barmanObjectStore.s3Credentials.accessKeyId.name | string | `"aws-creds"` | existing Kubernetes Secret to use for S3 access key ID |
-| backup.barmanObjectStore.s3Credentials.secretAccessKey.key | string | `"ACCESS_SECRET_KEY"` | key in Kubernetes Secret to use for S3 secret key |
-| backup.barmanObjectStore.s3Credentials.secretAccessKey.name | string | `"aws-creds"` | existing Kubernetes Secret to use for S3 secret key |
-| backup.retentionPolicy | string | `"30d"` | how long to keep backups for |
+| backup | object | `{}` | if we should backup up this cluster, please see values.yaml for example |
 | bootstrap.initdb.database | string | `"app"` | initial database to create |
 | bootstrap.initdb.owner | string | `"app"` | owner of the initial database that is created above |
 | certificates.client.clientCASecret | string | `""` | name of existing Kubernetes Secret for the postgresql client Certificate Authority cert, ignored if certificates.generate is true |
@@ -43,12 +37,8 @@ Create postgres tenant clusters managed by the CNPG Operator
 | name | string | `"cnpg"` |  |
 | postgresql.pg_hba | list | `["hostnossl all all 0.0.0.0/0 reject","hostssl all all 0.0.0.0/0 cert clientcert=verify-full"]` | records for the pg_hba.conf file. ref: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html |
 | primaryUpdateStrategy | string | `"unsupervised"` |  |
-| resources.limits | object | `{"cpu":"1000m","memory":"512Mi"}` | resource limit for pods |
-| resources.requests | object | `{"cpu":"50m","memory":"64Mi"}` | minimum resources guaranteed for pods |
-| scheduledBackup.name | string | `"example-backup"` | name to use for your scheduled backup job |
-| scheduledBackup.spec.backupOwnerReference | string | `"self"` |  |
-| scheduledBackup.spec.cluster.name | string | `"pg-backup"` |  |
-| scheduledBackup.spec.schedule | string | `"0 0 0 * * *"` | crontab style schedule to run the backups |
+| resources | object | `{}` |  |
+| scheduledBackup | object | `{}` | schduled backups section, please see values.yaml for example |
 | storage.size | string | `"1Gi"` | how much storage to allocate to the postgresql cluster |
 | superuserSecret | string | `""` | name of existing secret to use as superuser redentials will be randomly generated if not specified. |
 | testApp.enabled | bool | `false` |  |
