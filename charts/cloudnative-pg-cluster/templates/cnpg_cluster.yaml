@@ -32,19 +32,10 @@ spec:
   {{- end }}
   storage:
     size: {{ .Values.storage.size }}
+  {{- with .Values.bootstrap }}
   bootstrap:
-    {{- if .Values.bootstrap.initdb }}
-    {{- with .Values.bootstrap.initdb }}
-    initdb:
-      {{- toYaml . | nindent 6 }}
-    {{- end }}
-    {{- end }}
-    {{- if .Values.bootstrap.recovery }}
-    {{- with .Values.bootstrap.recovery }}
-    recovery:
-      {{- toYaml . | nindent 6 }}
-    {{- end }}
-    {{- end }}
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- if or .Values.certificates.server.enabled .Values.certificates.client.enabled }}
   certificates:
   {{- if and .Values.certificates.server.enabled }}

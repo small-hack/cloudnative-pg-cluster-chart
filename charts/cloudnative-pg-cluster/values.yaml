@@ -22,19 +22,23 @@ superuserSecret: ""
 #               the switchover of the primary
 primaryUpdateStrategy: unsupervised
 
-bootstrap:
-  initdb:
-    # -- initial database to create
-    database: app
-    # -- owner of the initial database that is created above
-    owner: app
-    # secret:
-    #  name: app-secret
-    # list of SQL commands to run as part of the init scripts, example:
-    # postInitSQL:
-    #  - CREATE ROLE friend
-    # Specify an external cluster to bootstrap from
+# -- boostrap method. see: https://cloudnative-pg.io/documentation/1.23/bootstrap/
+bootstrap: {}
+  # -- for initializing a fresh cluster
+  # initdb:
+  #  # -- initial database to create
+  #  database: app
+  #  # -- owner of the initial database that is created above
+  #  owner: app
+  #  secret:
+  #   name: app-secret
+  #  list of SQL commands to run as part of the init scripts, example:
+  #  postInitSQL:
+  #   - CREATE ROLE friend
+  #
+  # for restoring a cluster
   # recovery:
+  #   # -- Specify an external cluster to bootstrap from
   #   source: clusterBackup
 
 # -- See https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-RoleConfiguration for explanation of all options

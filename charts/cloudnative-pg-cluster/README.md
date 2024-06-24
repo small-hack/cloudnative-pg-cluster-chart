@@ -1,6 +1,6 @@
 # cnpg-cluster
 
-![Version: 0.3.14](https://img.shields.io/badge/Version-0.3.14-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.4.0](https://img.shields.io/badge/Version-0.4.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 Create postgres tenant clusters managed by the CNPG Operator
 
@@ -16,8 +16,7 @@ Create postgres tenant clusters managed by the CNPG Operator
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | backup | object | `{}` | if we should backup up this cluster, please see values.yaml for example |
-| bootstrap.initdb.database | string | `"app"` | initial database to create |
-| bootstrap.initdb.owner | string | `"app"` | owner of the initial database that is created above |
+| bootstrap | object | `{}` | boostrap method. see: https://cloudnative-pg.io/documentation/1.23/bootstrap/ |
 | certificates.client.clientCASecret | string | `""` | name of existing Kubernetes Secret for the postgresql client Certificate Authority cert, ignored if certificates.generate is true |
 | certificates.client.enabled | bool | `false` | enable using client certificates |
 | certificates.client.generate | bool | `false` | generate client certs using cert-manager. if true the following are ignored: certificates.clientCASecret, certificates.replicationTLSSecret |

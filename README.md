@@ -16,3 +16,11 @@ helm show values cnpg/cnpg-cluster > values.yaml
 # install the chart
 helm install cnpg cnpg/cnpg-cluster --values values.yaml
 ```
+
+## Notes
+
+### You must specify a bootstrap section
+
+To use this chart you _have_ to specify either `bootstrap.initdb.database`/`bootstrap.initdb.owner` OR `bootstrap.recovery.source` in your helm parameters or values.yaml but you can't do both.
+
+You can see checkout the [CloudNativePG docs](https://cloudnative-pg.io/documentation/1.23/bootstrap/) for more info on the bootstrap section.
