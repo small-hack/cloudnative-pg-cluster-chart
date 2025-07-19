@@ -29,6 +29,8 @@ Create postgres tenant clusters managed by the CNPG Operator
 | certificates.user.username | list | `["app"]` | List of names of users to create a cert for, eg: the DbOwner specified earlier. This data populated into the commonName field of the certificate. |
 | enableSuperuserAccess | bool | `false` | CNPG disables the postgres superuser by default must be explicitly enabled |
 | externalClusters | list | `[]` |  |
+| imageCatalogRef.create | bool | `true` | Whether to provision an image catalog. If imageCatalog.images is empty this option will be ignored. |
+| imageCatalogRef.images | list | `[]` | List of images to be provisioned in an image catalog. |
 | imageName | string | `"ghcr.io/cloudnative-pg/postgresql:16.0"` | image to use for all tenant pods |
 | instances | int | `3` | number of postgres replicas minimum 1 required |
 | managed | object | `{"roles":[]}` | See https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-RoleConfiguration for explanation of all options |

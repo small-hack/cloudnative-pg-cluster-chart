@@ -61,7 +61,12 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
-
+{{/*
+Whether we need to use TimescaleDB defaults
+*/}}
+{{- define "cluster.useTimescaleDBDefaults" -}}
+{{ and (eq .Values.type "timescaledb") .Values.imageCatalog.create (empty .Values.imageCatalog.images) }}
+{{- end -}}
 
 {{/*
 Postgres UID

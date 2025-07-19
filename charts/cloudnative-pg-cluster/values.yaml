@@ -15,6 +15,14 @@ enableSuperuserAccess: false
 # will be randomly generated if not specified.
 superuserSecret: ""
 
+imageCatalogRef:
+  # -- Whether to provision an image catalog. If imageCatalog.images is empty this option will be ignored.
+  create: true
+  # -- List of images to be provisioned in an image catalog.
+  images: []
+    # - image: ghcr.io/your_repo/your_image:your_tag
+    #   major: 16
+
 # Examples of rolling update strategy:
 # unsupervised: automated update of the primary once all
 #                 replicas have been upgraded (default)
