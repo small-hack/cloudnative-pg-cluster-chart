@@ -60,3 +60,36 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Whether we need to use TimescaleDB defaults
+*/}}
+{{- define "cluster.useTimescaleDBDefaults" -}}
+{{ and (eq .Values.type "timescaledb") .Values.imageCatalog.create (empty .Values.imageCatalog.images) }}
+{{- end -}}
+
+{{/*
+Postgres UID
+*/}}
+{{- define "cluster.postgresUID" -}}
+  {{- if ge (int .Values.postgresUID) 0 -}}
+    {{- .Values.postgresUID }}
+  {{- else if and (eq (include "cluster.useTimescaleDBDefaults" .) "true") (eq .Values.type "timescaledb") -}}
+    {{- 1000 -}}
+  {{- else -}}
+    {{- 26 -}}
+  {{- end -}}
+{{- end -}}
+
+{{/*
+Postgres GID
+*/}}
+{{- define "cluster.postgresGID" -}}
+  {{- if ge (int .Values.postgresGID) 0 -}}
+    {{- .Values.postgresGID }}
+  {{- else if and (eq (include "cluster.useTimescaleDBDefaults" .) "true") (eq .Values.type "timescaledb") -}}
+    {{- 1000 -}}
+  {{- else -}}
+    {{- 26 -}}
+  {{- end -}}
+{{- end -}}

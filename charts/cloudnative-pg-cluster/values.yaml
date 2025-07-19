@@ -15,12 +15,26 @@ enableSuperuserAccess: false
 # will be randomly generated if not specified.
 superuserSecret: ""
 
+imageCatalog:
+  # -- Whether to provision an image catalog. If imageCatalog.images is empty this option will be ignored.
+  create: true
+  # -- List of images to be provisioned in an image catalog.
+  images: []
+    # - image: ghcr.io/your_repo/your_image:your_tag
+    #   major: 16
+
 # Examples of rolling update strategy:
 # unsupervised: automated update of the primary once all
 #                 replicas have been upgraded (default)
 # supervised: requires manual supervision to perform
 #               the switchover of the primary
 primaryUpdateStrategy: unsupervised
+
+# -- Type of the CNPG database. Available types:
+# * `postgresql`
+# * `postgis`
+# * `timescaledb`
+type: postgresql
 
 # -- boostrap method. see: https://cloudnative-pg.io/documentation/1.23/bootstrap/
 bootstrap: {}
@@ -134,6 +148,12 @@ certificates:
     # This data populated into the commonName field of the certificate.
     username:
       - "app"
+
+# -- The UID of the postgres user inside the image, defaults to 26
+postgresUID: -1
+
+# -- The GID of the postgres user inside the image, defaults to 26
+postgresGID: -1
 
 monitoring:
   # -- enable monitoring via Prometheus
