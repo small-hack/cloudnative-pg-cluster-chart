@@ -15,7 +15,7 @@ enableSuperuserAccess: false
 # will be randomly generated if not specified.
 superuserSecret: ""
 
-imageCatalogRef:
+imageCatalog:
   # -- Whether to provision an image catalog. If imageCatalog.images is empty this option will be ignored.
   create: true
   # -- List of images to be provisioned in an image catalog.
