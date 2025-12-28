@@ -5,7 +5,7 @@ name: "cnpg"
 instances: 3
 
 # -- image to use for all tenant pods
-imageName: ghcr.io/cloudnative-pg/postgresql:16.0
+imageName: ghcr.io/cloudnative-pg/postgresql:17.0
 
 # -- CNPG disables the postgres superuser by default
 # must be explicitly enabled
@@ -21,7 +21,7 @@ imageCatalog:
   # -- List of images to be provisioned in an image catalog.
   images: []
     # - image: ghcr.io/your_repo/your_image:your_tag
-    #   major: 16
+    #   major: 17
 
 # Examples of rolling update strategy:
 # unsupervised: automated update of the primary once all
@@ -168,6 +168,8 @@ postgresql:
 storage:
   # -- how much storage to allocate to the postgresql cluster
   size: 1Gi
+  # -- set the storage class of the PVC.
+  storageClass: default
 
 # from https://cloudnative-pg.io/documentation/1.22/resource_management/
 resources: {}
