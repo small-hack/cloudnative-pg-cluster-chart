@@ -1,6 +1,6 @@
 # cnpg-cluster
 
-![Version: 0.5.0](https://img.shields.io/badge/Version-0.5.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 Create postgres tenant clusters managed by the CNPG Operator
 
@@ -9,7 +9,7 @@ Create postgres tenant clusters managed by the CNPG Operator
 | Name | Email | Url |
 | ---- | ------ | --- |
 | cloudymax |  | <https://github.com/cloudymax> |
-| jessebot |  | <https://github.com/jessebot> |
+| jessebot |  | <https://jessebot.work> |
 
 ## Values
 
@@ -31,7 +31,7 @@ Create postgres tenant clusters managed by the CNPG Operator
 | externalClusters | list | `[]` |  |
 | imageCatalog.create | bool | `true` | Whether to provision an image catalog. If imageCatalog.images is empty this option will be ignored. |
 | imageCatalog.images | list | `[]` | List of images to be provisioned in an image catalog. |
-| imageName | string | `"ghcr.io/cloudnative-pg/postgresql:16.0"` | image to use for all tenant pods |
+| imageName | string | `"ghcr.io/cloudnative-pg/postgresql:17.0"` | image to use for all tenant pods |
 | instances | int | `3` | number of postgres replicas minimum 1 required |
 | managed | object | `{"roles":[]}` | See https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-RoleConfiguration for explanation of all options |
 | monitoring.enablePodMonitor | bool | `false` | enable monitoring via Prometheus |
