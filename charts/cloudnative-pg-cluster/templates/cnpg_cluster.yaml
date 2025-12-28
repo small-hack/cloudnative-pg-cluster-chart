@@ -41,6 +41,9 @@ spec:
   {{- end }}
   storage:
     size: {{ .Values.storage.size }}
+    {{- if ne .Values.storage.storageClass "default" }}
+    storageClass: {{ .Values.storage.storageClass }}
+    {{- end }}
   {{- with .Values.bootstrap }}
   bootstrap:
     {{- toYaml . | nindent 4 }}

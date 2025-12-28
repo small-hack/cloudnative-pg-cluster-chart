@@ -43,6 +43,7 @@ Create postgres tenant clusters managed by the CNPG Operator
 | resources | object | `{}` |  |
 | scheduledBackup | object | `{}` | schduled backups section, please see values.yaml for example |
 | storage.size | string | `"1Gi"` | how much storage to allocate to the postgresql cluster |
+| storage.storageClass | string | `"default"` | set the storage class of the PVC. |
 | superuserSecret | string | `""` | name of existing secret to use as superuser redentials will be randomly generated if not specified. |
 | testApp.enabled | bool | `false` |  |
 | type | string | `"postgresql"` | Type of the CNPG database. Available types: * `postgresql` * `postgis` * `timescaledb` |
