@@ -1,5 +1,9 @@
 name: "cnpg"
 
+# -- Cluster annotations
+annotations:
+  cnpg.io/skipEmptyWalArchiveCheck: enabled
+
 # -- number of postgres replicas
 # minimum 1 required
 instances: 3
