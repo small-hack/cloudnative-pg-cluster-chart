@@ -1,6 +1,6 @@
 # cnpg-cluster
 
-![Version: 0.6.0](https://img.shields.io/badge/Version-0.6.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 0.7.0](https://img.shields.io/badge/Version-0.7.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 Create postgres tenant clusters managed by the CNPG Operator
 
@@ -15,6 +15,7 @@ Create postgres tenant clusters managed by the CNPG Operator
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| annotations | object | `{"cnpg.io/skipEmptyWalArchiveCheck":"enabled"}` | Cluster annotations |
 | backup | object | `{}` | if we should backup up this cluster, please see values.yaml for example |
 | bootstrap | object | `{}` | boostrap method. see: https://cloudnative-pg.io/documentation/1.23/bootstrap/ |
 | certificates.client.clientCASecret | string | `""` | name of existing Kubernetes Secret for the postgresql client Certificate Authority cert, ignored if certificates.generate is true |
