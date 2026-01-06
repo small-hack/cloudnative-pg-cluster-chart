@@ -1,15 +1,16 @@
 name: "cnpg"
 
-# -- Cluster annotations
+version:
+  # -- version of postgres to run in all tenant pods
+  postgresql: 17
+
+  # -- Cluster annotations
 annotations:
   cnpg.io/skipEmptyWalArchiveCheck: enabled
 
 # -- number of postgres replicas
 # minimum 1 required
 instances: 3
-
-# -- image to use for all tenant pods
-imageName: ghcr.io/cloudnative-pg/postgresql:17.0
 
 # -- CNPG disables the postgres superuser by default
 # must be explicitly enabled
