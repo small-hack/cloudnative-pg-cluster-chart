@@ -21,7 +21,74 @@ helm install cnpg cnpg-wrapper/cnpg-cluster --values values.yaml
 
 ### Using the certficates
 
-Certificates are generated using [CertManager](https://cert-manager.io/) to bootstrap self-signed CAs, Issuers and certs.
+Certificates are generated using [CertManager](https://cert-manager.io/) to bootstrap self-signed CAs, Issuers and certs. To use them, please provide the following via your helm `values.yaml`:
+
+```yaml
+# -- name to use for templating certs
+name: "app-postgres"
+
+certificates:
+  server:
+    # -- enable using server certificates
+    enabled: true
+    # -- generate server certs using cert-manager. if true the following
+    # are ignored: certificates.serverTLSSecret, certificates.serverCASecret
+    generate: true
+    # -- name of existing Kubernetes Secret for the postgresql server TLS cert,
+    # ignored if certificates.generate is true
+    serverTLSSecret: ""
+    # -- name of existing Kubernetes Secret for the postgresql server Certificate
+    # Authority cert, ignored if certificates.generate is true
+    serverCASecret: ""
+  client:
+    # -- enable using client certificates
+    enabled: true
+    # -- generate client certs using cert-manager. if true the following are
+    # ignored: certificates.clientCASecret, certificates.replicationTLSSecret
+    generate: true
+    # -- name of existing Kubernetes Secret for the postgresql client Certificate
+    # Authority cert, ignored if certificates.generate is true
+    clientCASecret: ""
+    # -- name of existing Kubernetes Secret for the postgresql replication TLS
+    # cert ignored if certificates.generate is true
+    replicationTLSSecret: ""
+  user:
+    # -- create a certificate for a user to connect to postgres using CertManager
+    # requires server and client certificate generation enabled
+    enabled: true
+    # -- List of names of users to create a cert for, eg: the DbOwner specified earlier.
+    # This data populated into the commonName field of the certificate.
+    username:
+      - "my-app"
+```
+
+Then, if you're using our bundled upstream CNPG cluster chart, make sure you provide the following:
+
+```yaml
+cnpgCluster:
+  # -- enable this to deploy the official CNPG cluster helm chart dep
+  # All other values here are passed directly to the their chart. See:
+  # https://github.com/cloudnative-pg/charts/blob/main/charts/cluster/values.yaml
+  enabled: true
+  type: postgresql
+  mode: standalone
+  # -- see: https://cloudnative-pg.io/docs/1.28/certificates#client-certificate
+  certificates:
+    ## examples if using our certificates features of this chart.
+    ## NOTE: app-postgres should be replaced with whatever you set Values.name to
+    serverTLSSecret: "app-postgres-server-cert"
+    serverCASecret: "app-postgres-server-ca-key-pair"
+    clientCASecret: "app-postgres-client-ca-key-pair"
+    replicationTLSSecret: "app-postgres-client-cert"
+    
+  postgresql:
+    # -- records for the pg_hba.conf file. ref: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
+    # this states that certs are required for access to the cluster,
+    # but you can change it to still allow passwords if you'd like
+    pg_hba:
+      - hostnossl all all 0.0.0.0/0 reject
+      - hostssl all all 0.0.0.0/0 cert clientcert=verify-full
+```
 
 ### Using the test app
 
