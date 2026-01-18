@@ -1,6 +1,6 @@
 # cnpg-cluster
 
-![Version: 1.0.1](https://img.shields.io/badge/Version-1.0.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 Create postgres tenant clusters managed by the CNPG Operator
 
@@ -36,8 +36,8 @@ Create postgres tenant clusters managed by the CNPG Operator
 | cnpgCluster.additionalEnv[1].name | string | `"AWS_RESPONSE_CHECKSUM_VALIDATION"` |  |
 | cnpgCluster.additionalEnv[1].value | string | `"when_required"` |  |
 | cnpgCluster.certificates | object | `{}` | see: https://cloudnative-pg.io/docs/1.28/certificates#client-certificate |
-| cnpgCluster.cluster.initdb.database | string | `"app"` |  |
-| cnpgCluster.cluster.initdb.owner | string | `"app"` |  |
+| cnpgCluster.cluster.initdb.database | string | `"app"` | you should change this the name of your database in the postgres cluster |
+| cnpgCluster.cluster.initdb.owner | string | `"app"` | you should change this the name of your database user in the postgres cluster |
 | cnpgCluster.cluster.instances | int | `3` | Number of instances |
 | cnpgCluster.cluster.postgresql.pg_hba | list | `["hostnossl all all 0.0.0.0/0 reject","hostssl all all 0.0.0.0/0 cert clientcert=verify-full"]` | records for the pg_hba.conf file. ref: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html |
 | cnpgCluster.enabled | bool | `false` | enable this to deploy the official CNPG cluster helm chart dep All other values here are passed directly to the their chart. See: https://github.com/cloudnative-pg/charts/blob/main/charts/cluster/values.yaml |
