@@ -65,11 +65,15 @@ cnpgCluster:
     # -- Number of instances
     instances: 3
 
-  postgresql:
-    # -- records for the pg_hba.conf file. ref: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
-    pg_hba:
-      - hostnossl all all 0.0.0.0/0 reject
-      - hostssl all all 0.0.0.0/0 cert clientcert=verify-full
+    initdb:
+      database: app
+      owner: app
+
+    postgresql:
+      # -- records for the pg_hba.conf file. ref: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
+      pg_hba:
+        - hostnossl all all 0.0.0.0/0 reject
+        - hostssl all all 0.0.0.0/0 cert clientcert=verify-full
 
   primaryUpdateStrategy: unsupervised
 

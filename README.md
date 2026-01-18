@@ -70,8 +70,6 @@ cnpgCluster:
   # All other values here are passed directly to the their chart. See:
   # https://github.com/cloudnative-pg/charts/blob/main/charts/cluster/values.yaml
   enabled: true
-  type: postgresql
-  mode: standalone
   # -- see: https://cloudnative-pg.io/docs/1.28/certificates#client-certificate
   certificates:
     ## examples if using our certificates features of this chart.
@@ -80,21 +78,52 @@ cnpgCluster:
     serverCASecret: "app-postgres-server-ca-key-pair"
     clientCASecret: "app-postgres-client-ca-key-pair"
     replicationTLSSecret: "app-postgres-client-cert"
-    
-  postgresql:
-    # -- records for the pg_hba.conf file. ref: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
-    # this states that certs are required for access to the cluster,
-    # but you can change it to still allow passwords if you'd like
-    pg_hba:
-      - hostnossl all all 0.0.0.0/0 reject
-      - hostssl all all 0.0.0.0/0 cert clientcert=verify-full
+
+  cluster:
+    initdb:
+      # -- replace this with your database name
+      database: app
+      # -- replace this with your database username
+      owner: app
+
+    postgresql:
+      # -- records for the pg_hba.conf file. ref: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
+      # this states that certs are required for access to the cluster,
+      # but you can change it to still allow passwords if you'd like
+      pg_hba:
+        - hostnossl all all 0.0.0.0/0 reject
+        - hostssl all all 0.0.0.0/0 cert clientcert=verify-full
 ```
 
 ### Using the test app
 
 The test app may be enabled by certificates as well as setting `testApp.enabled=true` in your helm parameters or in the `values.yaml` like this:
 ```yaml
+# -- name to use for templating certs
+name: "app-postgres"
+
 testApp:
   enabled: true
+
+cnpgCluster:
+  # -- enable this to deploy the official CNPG cluster helm chart dep
+  # All other values here are passed directly to the their chart. See:
+  # https://github.com/cloudnative-pg/charts/blob/main/charts/cluster/values.yaml
+  enabled: true
+  # -- see: https://cloudnative-pg.io/docs/1.28/certificates#client-certificate
+  certificates:
+    ## examples if using our certificates features of this chart.
+    ## NOTE: app-postgres should be replaced with whatever you set Values.name to
+    serverTLSSecret: "app-postgres-server-cert"
+    serverCASecret: "app-postgres-server-ca-key-pair"
+    clientCASecret: "app-postgres-client-ca-key-pair"
+    replicationTLSSecret: "app-postgres-client-cert"
+
+  cluster:
+    initdb:
+      # -- replace this with your database name
+      database: app
+      # -- replace this with your database username
+      owner: app
 ```
 This will create a very basic Deployment of `ghcr.io/cloudnative-pg/webtest` [as described in the official docs](https://cloudnative-pg.io/docs/1.28/ssl_connections#testing-the-connection-via-a-tls-certificate) that attempts to connect to your postgres cluster using full mTLS.
