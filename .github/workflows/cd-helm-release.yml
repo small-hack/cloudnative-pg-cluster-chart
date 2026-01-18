@@ -30,6 +30,10 @@ jobs:
         id: helm-install
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Add dependency chart repos
+        run: |
+          helm repo add cnpg https://cloudnative-pg.github.io/charts
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
