@@ -79,13 +79,6 @@ jobs:
         run: |
           cat << EOF > test-values.yaml
           name: "cnpg"
-          instances: 3
-          bootstrap:
-            initdb:
-              database: app
-              owner: app
-              secret:
-                name: null
           certificates:
             server:
               enabled: true
@@ -101,20 +94,6 @@ jobs:
               enabled: true
               username:
                 - "app"
-          monitoring:
-            enablePodMonitor: false
-          postgresql:
-            pg_hba:
-              - hostssl all all all cert
-          resources:
-            requests:
-              cpu: "50m"
-              memory: "256Mi"
-            limits:
-              cpu: "1000m"
-              memory: "1024Mi"
-          storage:
-            size: 1Gi
           testApp:
             enabled: false
           EOF

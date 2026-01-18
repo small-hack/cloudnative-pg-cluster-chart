@@ -40,6 +40,12 @@ testApp:
   # Populates user and DB from the Initdb owner and database values
   # Requires server, client, and user certificate generation to be enabled.
   enabled: false
+  # -- this is required for testing the application.
+  # please change to your database's username in your postgresql clsuter
+  owner: app
+  # -- this is required for testing the application.
+  # please change to your database name in your postgresql clsuter
+  database: app
 
 cnpgCluster:
   # -- enable this to deploy the official CNPG cluster helm chart dep
