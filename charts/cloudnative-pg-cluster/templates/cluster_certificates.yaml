@@ -48,15 +48,15 @@ spec:
     - server auth
   dnsNames:
     {{- if .Values.cnpgCluster.fullnameOverride }}
-    - "{{ ..Values.cnpgCluster.fullnameOverride }}-rw"
-    - "{{ ..Values.cnpgCluster.fullnameOverride }}-rw.{{ .Release.Namespace }}"
-    - "{{ ..Values.cnpgCluster.fullnameOverride }}-rw.{{ .Release.Namespace }}.svc"
-    - "{{ ..Values.cnpgCluster.fullnameOverride }}-r"
-    - "{{ ..Values.cnpgCluster.fullnameOverride }}-r.{{ .Release.Namespace }}"
-    - "{{ ..Values.cnpgCluster.fullnameOverride }}-r.{{ .Release.Namespace }}.svc"
-    - "{{ ..Values.cnpgCluster.fullnameOverride }}-ro"
-    - "{{ ..Values.cnpgCluster.fullnameOverride }}-ro.{{ .Release.Namespace }}"
-    - "{{ ..Values.cnpgCluster.fullnameOverride }}-ro.{{ .Release.Namespace }}.svc"
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-rw"
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-rw.{{ .Release.Namespace }}"
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-rw.{{ .Release.Namespace }}.svc"
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-r"
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-r.{{ .Release.Namespace }}"
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-r.{{ .Release.Namespace }}.svc"
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-ro"
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-ro.{{ .Release.Namespace }}"
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-ro.{{ .Release.Namespace }}.svc"
     {{- else }}
     - "cnpg-cluster-rw"
     - "cnpg-cluster-rw.{{ .Release.Namespace }}"
