@@ -53,10 +53,13 @@ cnpgCluster:
   # https://github.com/cloudnative-pg/charts/blob/main/charts/cluster/values.yaml
   enabled: false
   type: postgresql
+
   version:
     postgresql: "16"
 
   mode: standalone
+
+  fullnameOverride: ""
 
   # -- see: https://cloudnative-pg.io/docs/1.28/certificates#client-certificate
   certificates: {}
