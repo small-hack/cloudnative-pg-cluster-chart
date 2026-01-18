@@ -1,124 +1,5 @@
-name: "cnpg"
-
-version:
-  # -- version of postgres to run in all tenant pods
-  postgresql: 17
-
-  # -- Cluster annotations
-annotations:
-  cnpg.io/skipEmptyWalArchiveCheck: enabled
-
-# -- number of postgres replicas
-# minimum 1 required
-instances: 3
-
-# -- CNPG disables the postgres superuser by default
-# must be explicitly enabled
-enableSuperuserAccess: false
-
-# -- name of existing secret to use as superuser redentials
-# will be randomly generated if not specified.
-superuserSecret: ""
-
-imageCatalog:
-  # -- Whether to provision an image catalog. If imageCatalog.images is empty this option will be ignored.
-  create: true
-  # -- List of images to be provisioned in an image catalog.
-  images: []
-    # - image: ghcr.io/your_repo/your_image:your_tag
-    #   major: 17
-
-# Examples of rolling update strategy:
-# unsupervised: automated update of the primary once all
-#                 replicas have been upgraded (default)
-# supervised: requires manual supervision to perform
-#               the switchover of the primary
-primaryUpdateStrategy: unsupervised
-
-# -- Type of the CNPG database. Available types:
-# * `postgresql`
-# * `postgis`
-# * `timescaledb`
-type: postgresql
-
-# -- boostrap method. see: https://cloudnative-pg.io/documentation/1.23/bootstrap/
-bootstrap: {}
-  # -- for initializing a fresh cluster
-  # initdb:
-  #  # -- initial database to create
-  #  database: app
-  #  # -- owner of the initial database that is created above
-  #  owner: app
-  #  secret:
-  #   name: app-secret
-  #  list of SQL commands to run as part of the init scripts, example:
-  #  postInitSQL:
-  #   - CREATE ROLE friend
-  #
-  # for restoring a cluster
-  # recovery:
-  #   # -- Specify an external cluster to bootstrap from
-  #   source: clusterBackup
-
-# -- See https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-RoleConfiguration for explanation of all options
-managed:
-  roles: []
-  #  - name: friend
-  #    ensure: present
-  #    comment: "friendly user"
-  #    login: true
-  #    superuser: false
-  #    createdb: false
-  #    createrole: false
-  #    inRoles: []
-
-externalClusters: []
-#  # -- name of external/existing cluster
-#  - name: clusterBackup
-#    barmanObjectStore:
-#      destinationPath: "s3://backups"
-#      endpointURL: "http://HOST:PORT"
-#      s3Credentials:
-#        accessKeyId:
-#          # -- existing Kubernetes Secret to use for S3 access key ID
-#          name: "aws-creds"
-#          # -- key in Kubernetes Secret to use for S3 access key ID
-#          key: "ACCESS_KEY_ID"
-#        secretAccessKey:
-#          # -- existing Kubernetes Secret to use for S3 secret key
-#          name: "aws-creds"
-#          # -- key in Kubernetes Secret to use for S3 secret key
-#          key: "ACCESS_SECRET_KEY"
-#      wal:
-#        maxParallel: 8
-
-# -- if we should backup up this cluster, please see values.yaml for example
-backup: {}
-#  retentionPolicy: "30d"
-#  barmanObjectStore:
-#    destinationPath: "s3://backups"
-#    endpointURL: "http://HOST:PORT"
-#    s3Credentials:
-#      accessKeyId:
-#        # -- existing Kubernetes Secret to use for S3 access key ID
-#        name: "aws-creds"
-#        # -- key in Kubernetes Secret to use for S3 access key ID
-#        key: "ACCESS_KEY_ID"
-#      secretAccessKey:
-#        # -- existing Kubernetes Secret to use for S3 secret key
-#        name: "aws-creds"
-#        # -- key in Kubernetes Secret to use for S3 secret key
-#        key: "ACCESS_SECRET_KEY"
-
-# -- schduled backups section, please see values.yaml for example
-scheduledBackup: {}
-# name: example-backup
-# spec:
-#   # -- crontab style schedule to run the backups
-#   schedule: "0 0 0 * * *"
-#   backupOwnerReference: self
-#   cluster:
-#     name: pg-backup
+# -- name to use for templating certs
+name: "app-postgres"
 
 certificates:
   server:
@@ -154,41 +35,47 @@ certificates:
     username:
       - "app"
 
-# -- The UID of the postgres user inside the image, defaults to 26
-postgresUID: -1
-
-# -- The GID of the postgres user inside the image, defaults to 26
-postgresGID: -1
-
-monitoring:
-  # -- enable monitoring via Prometheus
-  enablePodMonitor: false
-
-postgresql:
-  # -- records for the pg_hba.conf file. ref: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
-  pg_hba:
-    - hostnossl all all 0.0.0.0/0 reject
-    - hostssl all all 0.0.0.0/0 cert clientcert=verify-full
-
-storage:
-  # -- how much storage to allocate to the postgresql cluster
-  size: 1Gi
-  # -- set the storage class of the PVC.
-  storageClass: default
-
-# from https://cloudnative-pg.io/documentation/1.22/resource_management/
-resources: {}
-  # -- minimum resources guaranteed for pods
-  # requests:
-  #   cpu: "50m"
-  #   memory: "64Mi"
-  # -- resource limit for pods
-  # limits:
-  #   cpu: "1000m"
-  #   memory: "512Mi"
-
 testApp:
   ## -- create a test deployment to verify db connectivity.
   # Populates user and DB from the Initdb owner and database values
   # Requires server, client, and user certificate generation to be enabled.
   enabled: false
+
+cnpgCluster:
+  # -- enable this to deploy the official CNPG cluster helm chart dep
+  # All other values here are passed directly to the their chart. See:
+  # https://github.com/cloudnative-pg/charts/blob/main/charts/cluster/values.yaml
+  enabled: false
+  type: postgresql
+  version:
+    postgresql: "16"
+
+  mode: standalone
+
+  # -- see: https://cloudnative-pg.io/docs/1.28/certificates#client-certificate
+  certificates: {}
+  ## examples if using our certificates features of this chart.
+  ## NOTE: app-postgres should be replaced with whatever you set Values.name to
+  #  serverTLSSecret: "app-postgres-server-cert"
+  #  serverCASecret: "app-postgres-server-ca-key-pair"
+  #  clientCASecret: "app-postgres-client-ca-key-pair"
+  #  replicationTLSSecret: "app-postgres-client-cert"
+
+  cluster:
+    # -- Number of instances
+    instances: 3
+
+  postgresql:
+    # -- records for the pg_hba.conf file. ref: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html
+    pg_hba:
+      - hostnossl all all 0.0.0.0/0 reject
+      - hostssl all all 0.0.0.0/0 cert clientcert=verify-full
+
+  primaryUpdateStrategy: unsupervised
+
+  # this solves an issue with an old boto version
+  additionalEnv:
+    - name: AWS_REQUEST_CHECKSUM_CALCULATION
+      value: when_required
+    - name: AWS_RESPONSE_CHECKSUM_VALIDATION
+      value: when_required
