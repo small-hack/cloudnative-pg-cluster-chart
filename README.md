@@ -1,26 +1,24 @@
 # CloudNativePG Cluster Chart
 
-This [helm chart](https://small-hack.github.io/cloudnative-pg-tenant-chart/) is intended to be the Cluster helm chart component to the [CloudNativePG operator helm chart](https://github.com/cloudnative-pg/charts).
+This [helm chart](https://small-hack.github.io/cloudnative-pg-tenant-chart/) was intended to be the Cluster helm chart component to the [CloudNativePG operator helm chart](https://github.com/cloudnative-pg/charts/tree/main/charts/cloudnative-pg), but now serves mostly as a wrapper for their official [CloudNativePG cluster helm chart](https://github.com/cloudnative-pg/charts/tree/main/charts/cluster) that provides certificate and test app functionality.
 
-Docs autogeneratated from the [values.yaml](charts/cloudnative-pg-cluster/values.yaml) are slowly being put together in the chart directory's [README.md](./charts/cloudnative-pg-cluster/README.md).
+Docs auto-generated from the [values.yaml](charts/cloudnative-pg-cluster/values.yaml) are available in the chart directory's [README.md](./charts/cloudnative-pg-cluster/README.md).
 
 ## TLDR
 
 ```bash
 # add the helm repo locally
-helm repo add cnpg https://small-hack.github.io/cloudnative-pg-cluster-chart
+helm repo add cnpg-wrapper https://small-hack.github.io/cloudnative-pg-cluster-chart
 
 # get the values and edit them if needed
-helm show values cnpg/cnpg-cluster > values.yaml
+helm show values cnpg-wrapper/cnpg-cluster > values.yaml
 
 # install the chart
-helm install cnpg cnpg/cnpg-cluster --values values.yaml
+helm install cnpg cnpg-wrapper/cnpg-cluster --values values.yaml
 ```
 
 ## Notes
 
-### You must specify a bootstrap section
+### Using the certficates
 
-To use this chart you _have_ to specify either `bootstrap.initdb.database`/`bootstrap.initdb.owner` OR `bootstrap.recovery.source` in your helm parameters or values.yaml but you can't do both.
-
-You can see checkout the [CloudNativePG docs](https://cloudnative-pg.io/documentation/1.23/bootstrap/) for more info on the bootstrap section.
+### Using the test app

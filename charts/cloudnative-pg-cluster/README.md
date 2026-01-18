@@ -1,6 +1,6 @@
 # cnpg-cluster
 
-![Version: 0.8.0](https://img.shields.io/badge/Version-0.8.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.0.0](https://img.shields.io/badge/Version-1.0.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 Create postgres tenant clusters managed by the CNPG Operator
 
@@ -8,16 +8,19 @@ Create postgres tenant clusters managed by the CNPG Operator
 
 | Name | Email | Url |
 | ---- | ------ | --- |
-| cloudymax |  | <https://github.com/cloudymax> |
+| cloudymax |  | <https://cloudydev.net> |
 | jessebot |  | <https://jessebot.work> |
+
+## Requirements
+
+| Repository | Name | Version |
+|------------|------|---------|
+| https://cloudnative-pg.github.io/charts | cnpgCluster(cluster) | 0.5.0 |
 
 ## Values
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| annotations."cnpg.io/skipEmptyWalArchiveCheck" | string | `"enabled"` |  |
-| backup | object | `{}` | if we should backup up this cluster, please see values.yaml for example |
-| bootstrap | object | `{}` | boostrap method. see: https://cloudnative-pg.io/documentation/1.23/bootstrap/ |
 | certificates.client.clientCASecret | string | `""` | name of existing Kubernetes Secret for the postgresql client Certificate Authority cert, ignored if certificates.generate is true |
 | certificates.client.enabled | bool | `false` | enable using client certificates |
 | certificates.client.generate | bool | `false` | generate client certs using cert-manager. if true the following are ignored: certificates.clientCASecret, certificates.replicationTLSSecret |
@@ -28,26 +31,20 @@ Create postgres tenant clusters managed by the CNPG Operator
 | certificates.server.serverTLSSecret | string | `""` | name of existing Kubernetes Secret for the postgresql server TLS cert, ignored if certificates.generate is true |
 | certificates.user.enabled | bool | `false` | create a certificate for a user to connect to postgres using CertManager requires server and client certificate generation enabled |
 | certificates.user.username | list | `["app"]` | List of names of users to create a cert for, eg: the DbOwner specified earlier. This data populated into the commonName field of the certificate. |
-| enableSuperuserAccess | bool | `false` | CNPG disables the postgres superuser by default must be explicitly enabled |
-| externalClusters | list | `[]` |  |
-| imageCatalog.create | bool | `true` | Whether to provision an image catalog. If imageCatalog.images is empty this option will be ignored. |
-| imageCatalog.images | list | `[]` | List of images to be provisioned in an image catalog. |
-| instances | int | `3` | number of postgres replicas minimum 1 required |
-| managed | object | `{"roles":[]}` | See https://cloudnative-pg.io/documentation/current/cloudnative-pg.v1/#postgresql-cnpg-io-v1-RoleConfiguration for explanation of all options |
-| monitoring.enablePodMonitor | bool | `false` | enable monitoring via Prometheus |
-| name | string | `"cnpg"` |  |
-| postgresGID | int | `-1` | The GID of the postgres user inside the image, defaults to 26 |
-| postgresUID | int | `-1` | The UID of the postgres user inside the image, defaults to 26 |
-| postgresql.pg_hba | list | `["hostnossl all all 0.0.0.0/0 reject","hostssl all all 0.0.0.0/0 cert clientcert=verify-full"]` | records for the pg_hba.conf file. ref: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html |
-| primaryUpdateStrategy | string | `"unsupervised"` |  |
-| resources | object | `{}` |  |
-| scheduledBackup | object | `{}` | schduled backups section, please see values.yaml for example |
-| storage.size | string | `"1Gi"` | how much storage to allocate to the postgresql cluster |
-| storage.storageClass | string | `"default"` | set the storage class of the PVC. |
-| superuserSecret | string | `""` | name of existing secret to use as superuser redentials will be randomly generated if not specified. |
+| cnpgCluster.additionalEnv[0].name | string | `"AWS_REQUEST_CHECKSUM_CALCULATION"` |  |
+| cnpgCluster.additionalEnv[0].value | string | `"when_required"` |  |
+| cnpgCluster.additionalEnv[1].name | string | `"AWS_RESPONSE_CHECKSUM_VALIDATION"` |  |
+| cnpgCluster.additionalEnv[1].value | string | `"when_required"` |  |
+| cnpgCluster.certificates | object | `{}` | see: https://cloudnative-pg.io/docs/1.28/certificates#client-certificate |
+| cnpgCluster.cluster.instances | int | `3` | Number of instances |
+| cnpgCluster.enabled | bool | `false` | enable this to deploy the official CNPG cluster helm chart dep All other values here are passed directly to the their chart. See: https://github.com/cloudnative-pg/charts/blob/main/charts/cluster/values.yaml |
+| cnpgCluster.mode | string | `"standalone"` |  |
+| cnpgCluster.postgresql.pg_hba | list | `["hostnossl all all 0.0.0.0/0 reject","hostssl all all 0.0.0.0/0 cert clientcert=verify-full"]` | records for the pg_hba.conf file. ref: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html |
+| cnpgCluster.primaryUpdateStrategy | string | `"unsupervised"` |  |
+| cnpgCluster.type | string | `"postgresql"` |  |
+| cnpgCluster.version.postgresql | string | `"16"` |  |
+| name | string | `"app-postgres"` | name to use for templating certs |
 | testApp.enabled | bool | `false` |  |
-| type | string | `"postgresql"` | Type of the CNPG database. Available types: * `postgresql` * `postgis` * `timescaledb` |
-| version.postgresql | int | `17` | version of postgres to run in all tenant pods |
 
 ----------------------------------------------
 Autogenerated from chart metadata using [helm-docs v1.14.2](https://github.com/norwoodj/helm-docs/releases/v1.14.2)
