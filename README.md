@@ -21,4 +21,9 @@ helm install cnpg cnpg-wrapper/cnpg-cluster --values values.yaml
 
 ### Using the certficates
 
+Certificates are generated using [CertManager](https://cert-manager.io/) to bootstrap self-signed CAs, Issuers and certs.
+
 ### Using the test app
+
+The test app may be enabled by certificates as well as setting `testApp.enabled` to `true` in the values.yaml.
+This will create a very basic Deployment of `ghcr.io/cloudnative-pg/webtest` [as described in the official docs](https://cloudnative-pg.io/docs/1.28/ssl_connections#testing-the-connection-via-a-tls-certificate) that attempts to connect to your postgres cluster using full mTLS.
