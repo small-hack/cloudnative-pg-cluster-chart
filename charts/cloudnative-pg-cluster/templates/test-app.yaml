@@ -30,8 +30,8 @@ spec:
                 sslcert=/etc/secrets/app/tls.crt
                 sslrootcert=/etc/secrets/ca/ca.crt
                 host={{ .Values.name }}-rw.{{ .Release.Namespace }}.svc
-                dbname={{ .Values.cnpgCluster.cluster.initdb.database }}
-                user={{ .Values.cnpgCluster.cluster.initdb.owner }}
+                dbname={{ .Values.testApp.database }}
+                user={{ .Values.testApp.owner }}
                 sslmode=verify-full
             - name: SQL_QUERY
               value: SELECT 1
@@ -50,6 +50,6 @@ spec:
             defaultMode: 0600
         - name: secret-volume-app
           secret:
-            secretName: "{{ .Values.name }}-{{ .Values.cnpgCluster.cluster.initdb.owner }}-cert"
+            secretName: "{{ .Values.name }}-{{ .Values.testApp.owner }}-cert"
             defaultMode: 0600
 {{- end }}
