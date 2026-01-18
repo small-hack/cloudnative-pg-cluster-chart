@@ -1,6 +1,6 @@
 # cnpg-cluster
 
-![Version: 1.1.0](https://img.shields.io/badge/Version-1.1.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
+![Version: 1.1.1](https://img.shields.io/badge/Version-1.1.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square)
 
 Create postgres tenant clusters managed by the CNPG Operator
 
@@ -41,6 +41,7 @@ Create postgres tenant clusters managed by the CNPG Operator
 | cnpgCluster.cluster.instances | int | `3` | Number of instances |
 | cnpgCluster.cluster.postgresql.pg_hba | list | `["hostnossl all all 0.0.0.0/0 reject","hostssl all all 0.0.0.0/0 cert clientcert=verify-full"]` | records for the pg_hba.conf file. ref: https://www.postgresql.org/docs/current/auth-pg-hba-conf.html |
 | cnpgCluster.enabled | bool | `false` | enable this to deploy the official CNPG cluster helm chart dep All other values here are passed directly to the their chart. See: https://github.com/cloudnative-pg/charts/blob/main/charts/cluster/values.yaml |
+| cnpgCluster.fullnameOverride | string | `""` |  |
 | cnpgCluster.mode | string | `"standalone"` |  |
 | cnpgCluster.primaryUpdateStrategy | string | `"unsupervised"` |  |
 | cnpgCluster.type | string | `"postgresql"` |  |

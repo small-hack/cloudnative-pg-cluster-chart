@@ -47,15 +47,27 @@ spec:
   usages:
     - server auth
   dnsNames:
-    - "{{ .Values.name }}-rw"
-    - "{{ .Values.name }}-rw.{{ .Release.Namespace }}"
-    - "{{ .Values.name }}-rw.{{ .Release.Namespace }}.svc"
-    - "{{ .Values.name }}-r"
-    - "{{ .Values.name }}-r.{{ .Release.Namespace }}"
-    - "{{ .Values.name }}-r.{{ .Release.Namespace }}.svc"
-    - "{{ .Values.name }}-ro"
-    - "{{ .Values.name }}-ro.{{ .Release.Namespace }}"
-    - "{{ .Values.name }}-ro.{{ .Release.Namespace }}.svc"
+    {{- if .Values.cnpgCluster.fullnameOverride }}
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-rw"
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-rw.{{ .Release.Namespace }}"
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-rw.{{ .Release.Namespace }}.svc"
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-r"
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-r.{{ .Release.Namespace }}"
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-r.{{ .Release.Namespace }}.svc"
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-ro"
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-ro.{{ .Release.Namespace }}"
+    - "{{ .Values.cnpgCluster.fullnameOverride }}-ro.{{ .Release.Namespace }}.svc"
+    {{- else }}
+    - "cnpg-cluster-rw"
+    - "cnpg-cluster-rw.{{ .Release.Namespace }}"
+    - "cnpg-cluster-rw.{{ .Release.Namespace }}.svc"
+    - "cnpg-cluster-r"
+    - "cnpg-cluster-r.{{ .Release.Namespace }}"
+    - "cnpg-cluster-r.{{ .Release.Namespace }}.svc"
+    - "cnpg-cluster-ro"
+    - "cnpg-cluster-ro.{{ .Release.Namespace }}"
+    - "cnpg-cluster-ro.{{ .Release.Namespace }}.svc"
+    {{- end }}
   issuerRef:
     name: "{{ .Values.name }}-server-ca-issuer"
     kind: Issuer
